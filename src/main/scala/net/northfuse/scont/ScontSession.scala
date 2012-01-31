@@ -61,8 +61,14 @@ object ScontSession {
 		holder.set(session)
 		try {
 			session.current match {
-				case None => start
-				case Some(callback) => callback(request, response)
+				case None => {
+					println("No identifier found... invoking start page")
+					start
+				}
+				case Some(callback) => {
+					println("found identifier... invoking callback [" + callback + "]")
+					callback(request, response)
+				}
 			}
 		} catch errorHandle
 		finally {
