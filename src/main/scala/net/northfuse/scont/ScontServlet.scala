@@ -7,7 +7,9 @@ import javax.servlet.http.{HttpServletResponse, HttpServletRequest, HttpServlet}
  */
 class ScontServlet extends HttpServlet {
 	override def doGet(req: HttpServletRequest, resp: HttpServletResponse) {
+    println("getting...")
 		ScontSession(req.getSession, {
+      println("test")
 		})
 	}
 }
