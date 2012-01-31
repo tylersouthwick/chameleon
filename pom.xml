@@ -60,6 +60,11 @@
 			<artifactId>scala-library</artifactId>
 		</dependency>
 
+        <dependency>
+            <groupId>jetty</groupId>
+            <artifactId>jetty</artifactId>
+            <version>6.0.2</version>
+        </dependency>
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>servlet-api</artifactId>
