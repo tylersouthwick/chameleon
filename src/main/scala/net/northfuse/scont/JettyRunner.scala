@@ -8,10 +8,10 @@ import org.mortbay.jetty.Server
  */
 
 object JettyRunner {
-	def main(args : Array[String]) {
+	def main(args: Array[String]) {
 		val server = new Server(8080)
-    val root = new Context(server, "/", Context.SESSIONS)
-    root.addServlet(new ServletHolder(new ScontServlet), "/*")
-    server.start()
+		val root = new Context(server, "/", Context.SESSIONS)
+		root.addServlet(new ServletHolder(new ScontServlet), "/*")
+		server.start()
 	}
 }
