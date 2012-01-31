@@ -1,6 +1,6 @@
 package net.northfuse.scont
 
-import javax.servlet.http.{HttpServletResponse => Response, HttpServletRequest => Request, HttpServlet}
+import javax.servlet.http.{HttpServletResponse => Response, HttpServletRequest => Request}
 
 /**
  * @author tylers2
@@ -33,16 +33,20 @@ object Example extends ScontServlet with HTMLView with JettyRunner {
 		val answer = request.getParameter("data1")
 		HTMLView(response) {
 			<body>
-				<p>You Answered the question</p>{link({
-				(request, response) =>
-					HTMLView(response) {
-						<body>
-							<h1>Your answer was
-								{answer}
-							</h1>
-						</body>
-					}
-			}, "See your response")}
+				<p>You Answered the question</p>{link(showAnswer(answer), "See your response")}
+			</body>
+		}
+	}
+
+	/**
+	 * Currying example
+	 */
+	def showAnswer(answer : String) (request : Request,  response : Response) {
+		HTMLView(response) {
+			<body>
+				<h1>Your answer was
+					{answer}
+				</h1>
 			</body>
 		}
 	}
