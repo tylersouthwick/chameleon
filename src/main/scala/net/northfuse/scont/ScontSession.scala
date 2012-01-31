@@ -32,7 +32,7 @@ object ScontSession {
 		holder.set(session)
 		try {
 			callback
-		} catch {
+		} finally {
 			holder.remove
 		}
 	}
