@@ -9,8 +9,8 @@
 		<version>7</version>
 	</parent>
 
-	<groupId>net.northfuse.scont</groupId>
-	<artifactId>scont</artifactId>
+	<groupId>net.northfuse.chameleon</groupId>
+	<artifactId>chameleon</artifactId>
 	<version>0.1.0-SNAPSHOT</version>
 	<packaging>jar</packaging>
 	<name>Scala Continuations</name>
@@ -26,14 +26,14 @@
 	</licenses>
 
 	<scm>
-		<url>https://bitbucket.org/tylersouthwick/scont</url>
-		<developerConnection>scm:git:git@bitbucket.org:tylersouthwick/scont.git</developerConnection>
-		<connection>scm:git:git@bitbucket.org:tylersouthwick/scont.git</connection>
+		<url>https://bitbucket.org/tylersouthwick/chameleon</url>
+		<developerConnection>scm:git:git@bitbucket.org:tylersouthwick/chameleon.git</developerConnection>
+		<connection>scm:git:git@bitbucket.org:tylersouthwick/chameleon.git</connection>
 	</scm>
 
 	<issueManagement>
 		<system>BitBucket</system>
-		<url>https://bitbucket.org/tylersouthwick/scont/issues</url>
+		<url>https://bitbucket.org/tylersouthwick/chameleon/issues</url>
 	</issueManagement>
 
 	<!--

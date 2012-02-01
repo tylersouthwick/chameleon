@@ -7,7 +7,7 @@ import javax.servlet.http.{HttpServletRequest => Request}
  */
 object Example extends ScontServlet with HTMLView with JettyRunner {
 
-	val LOG = org.slf4j.LoggerFactory.getLogger("net.northfuse.scont.Example")
+	val LOG = org.slf4j.LoggerFactory.getLogger("net.northfuse.chameleon.Example")
 
 	def homePage = {
 		LOG.info("showing home page....")
