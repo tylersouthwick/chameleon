@@ -46,15 +46,20 @@ class DeltaQueueMapTest {
 		Assert.assertTrue(get2()) //count = 2
 		map += "hello3" -> "test"
 		Assert.assertEquals(Seq((Seq("hello2", "hello1"), 2), (Seq("hello3"), 2)), map.evictSeq)
+		Assert.assertEquals(Seq(("hello2", 2), ("hello1", 2), ("hello3", 4)), map.keysWithTimeout)
 		Assert.assertTrue(get1())
 		Assert.assertEquals(Seq((Seq("hello2", "hello1"), 1), (Seq("hello3"), 2)), map.evictSeq)
+		Assert.assertEquals(Seq(("hello2", 1), ("hello1", 1), ("hello3", 3)), map.keysWithTimeout)
 		Assert.assertTrue(get1())
 		Assert.assertEquals(Seq((Seq("hello3"), 2)), map.evictSeq)
+		Assert.assertEquals(Seq(("hello3", 2)), map.keysWithTimeout)
 		Assert.assertFalse(get1())
 		Assert.assertTrue(get3())
 		Assert.assertEquals(Seq((Seq("hello3"), 1)), map.evictSeq)
+		Assert.assertEquals(Seq(("hello3", 1)), map.keysWithTimeout)
 		Assert.assertTrue(get3())
 		Assert.assertEquals(Seq(), map.evictSeq)
+		Assert.assertEquals(Seq(), map.keysWithTimeout)
 		Assert.assertFalse(get3())
 	}
 

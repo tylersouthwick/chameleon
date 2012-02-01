@@ -72,4 +72,11 @@ class DeltaQueueMap[A, B](count: Int) extends Map[A, B] {
 	}
 
 	override def keys = map.keys
+
+	def keysWithTimeout = evictQueue.foldLeft(Seq[(A, Int)]()) { case (seq, (keys, timeout)) => seq.lastOption match {
+		case Some((lastKey, lastTimeout)) => {
+			seq ++ keys.map((_, timeout + lastTimeout))
+		}
+		case None => seq ++ keys.map((_, timeout))
+	}}
 }
