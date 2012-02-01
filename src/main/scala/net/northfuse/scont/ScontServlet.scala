@@ -15,7 +15,7 @@ trait ScontServlet extends HttpServlet {
 		})
 	}
 
-	def homePage : ScontCallback
+	def homePage: ScontCallback
 
 	private def handleNotFound(identifier: String, request: Request, response: Response) {
 		identifier match {
@@ -30,20 +30,36 @@ trait ScontServlet extends HttpServlet {
 	private def listSessions(response: Response) {
 		HTMLView(response) {
 			<body>
-				<h1>Open Sessions</h1>{val list = ScontSession.session.all
-			if (list.isEmpty) {
-				<div>There are no sessions</div>
-			} else {
-				<ul>
-					{list.map {
-					id => {
-						<li>
-							<a href={"/" + id}>{id}</a>
-						</li>
-					}
+				<h1>Open Sessions</h1>
+				{
+				val list = ScontSession.session.all
+				if (list.isEmpty) {
+					<div>There are no sessions</div>
+				} else {
+					<style>
+						tbody tr:hover {"{background-color: lightgray}"}
+					</style>
+					<table>
+						<thead>
+						<tr>
+							<th>Session Id</th>
+							<th>TTL</th>
+						</tr>
+						</thead>
+						<tbody>
+						{list.map {case (id, timeout) =>
+							<tr>
+								<td>
+									<a href={"/" + id}>{id}</a>
+								</td>
+								<td>
+									{timeout}
+								</td>
+							</tr>
+						}}
+						</tbody>
+					</table>
 				}}
-				</ul>
-			}}
 			</body>
 		}
 	}

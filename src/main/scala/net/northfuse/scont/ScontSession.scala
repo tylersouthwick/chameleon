@@ -59,7 +59,7 @@ class ScontSession(session: Session, request: Request) {
 		case Some(identifier) => Some(getFromSession(identifier))
 	}
 
-	def all = lock {map.keys}
+	def all = lock {map.keysWithTimeout}
 
 	def lock[T](callback : => T) = {
 		session synchronized {
