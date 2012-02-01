@@ -1,4 +1,4 @@
-package net.northfuse.scont
+package net.northfuse.chameleon
 
 import javax.servlet.http.{HttpSession => Session, HttpServletResponse => Response, HttpServletRequest => Request}
 import java.lang.ThreadLocal

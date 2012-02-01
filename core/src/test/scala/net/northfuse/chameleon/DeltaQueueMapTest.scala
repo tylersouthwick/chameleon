@@ -1,4 +1,4 @@
-package net.northfuse.scont
+package net.northfuse.chameleon
 
 import org.junit.{Assert, Test}
 

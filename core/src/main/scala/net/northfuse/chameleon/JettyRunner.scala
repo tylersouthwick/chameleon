@@ -1,4 +1,4 @@
-package net.northfuse.scont
+package net.northfuse.chameleon
 
 import org.mortbay.jetty.servlet.{ServletHolder, Context}
 import org.mortbay.jetty.Server
