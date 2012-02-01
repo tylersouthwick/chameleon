@@ -10,20 +10,34 @@ import java.lang.ThreadLocal
 class ScontSession(session : Session, request : Request) {
 
 	import ScontSession.ScontCallback
-	val scontPrefix = "scont_"
+  
 	def add(callback : ScontCallback) = {
 		val identifier = newIdentifier
 		addToSession(identifier, callback)
 		identifier
 	}
 	
+  def map = {
+    val m = session.getAttribute("scont_session")
+
+    if (m == null) {
+      val newM = new collection.mutable.HashMap[String, ScontCallback]
+      session.setAttribute("scont_session", newM)
+      newM
+    } else {
+      m.asInstanceOf[collection.mutable.HashMap[String, ScontCallback]]
+    }
+  }
+
 	def addToSession(identifier : String,  callback : ScontCallback) {
-		session.setAttribute(scontPrefix + identifier, callback)
+    map.put(identifier, callback)
 	}
 	
 	def getFromSession(identifier : String) = {
-		val callback = session.getAttribute(scontPrefix + identifier)
-		if (callback == null) throw new IdentifierNotFoundException(identifier) else callback.asInstanceOf[ScontCallback]
+		map.get(identifier) match {
+      case Some(callback) => callback
+      case None => throw new IdentifierNotFoundException(identifier)
+    }
 	}
 	
 	def newIdentifier = java.util.UUID.randomUUID().toString
@@ -43,8 +57,7 @@ class ScontSession(session : Session, request : Request) {
 		case Some(identifier) => Some(getFromSession(identifier))
 	}
 	
-	import collection.JavaConversions._
-	def all = session.getAttributeNames.map(_.asInstanceOf[String]).filter(_.startsWith(scontPrefix)).map(_.substring(scontPrefix.length))
+	def all = map.keys
 }
 
 object ScontSession {
