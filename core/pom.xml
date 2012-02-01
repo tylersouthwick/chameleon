@@ -11,9 +11,9 @@
 
 	<artifactId>chameleon-core</artifactId>
 	<packaging>jar</packaging>
-	<name>Chameleon Web Framework</name>
+	<name>Chameleon Examples</name>
 	<description>
-		Web Framework using continuations
+		Chameleon Examples
 	</description>
 
 	<dependencies>
@@ -34,8 +34,9 @@
 		<dependency>
 			<groupId>org.mortbay.jetty</groupId>
 			<artifactId>jetty</artifactId>
-			<version>6.1.25</version>
+			<optional>true</optional>
 		</dependency>
+
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>servlet-api</artifactId>
@@ -47,4 +48,7 @@
 		</dependency>
 	</dependencies>
 
+	<properties>
+		<jetty.version>6.1.25</jetty.version>
+	</properties>
 </project>
