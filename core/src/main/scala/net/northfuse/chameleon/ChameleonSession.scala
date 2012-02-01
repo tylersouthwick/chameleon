@@ -7,29 +7,30 @@ import java.lang.ThreadLocal
 /**
  * @author tylers2
  */
-class ScontSession(session: Session, request: Request) {
+class ChameleonSession(session: Session, request: Request) {
 
-	import ScontSession.ScontCallback
+	import ChameleonSession.ChameleonCallback
+	val sessionAttribute = "chameleonSession"
 
-	def add(callback: ScontCallback) = {
+	def add(callback: ChameleonCallback) = {
 		val identifier = newIdentifier
 		addToSession(identifier, callback)
 		identifier
 	}
 
 	def map = lock {
-		val m = session.getAttribute("scont_session")
+		val m = session.getAttribute(sessionAttribute)
 
 		if (m == null) {
-			val newM = new DeltaQueueMap[String, ScontCallback](10)
-			session.setAttribute("scont_session", newM)
+			val newM = new DeltaQueueMap[String, ChameleonCallback](10)
+			session.setAttribute(sessionAttribute, newM)
 			newM
 		} else {
-			m.asInstanceOf[DeltaQueueMap[String, ScontCallback]]
+			m.asInstanceOf[DeltaQueueMap[String, ChameleonCallback]]
 		}
 	}
 
-	def addToSession(identifier: String, callback: ScontCallback) {
+	def addToSession(identifier: String, callback: ChameleonCallback) {
 		lock {
 			map.put(identifier, callback)
 		}
@@ -68,18 +69,18 @@ class ScontSession(session: Session, request: Request) {
 	}
 }
 
-object ScontSession {
-	type ScontCallback = (Request, Response) => Unit
-	private val LOG = org.slf4j.LoggerFactory.getLogger(classOf[ScontSession])
+object ChameleonSession {
+	type ChameleonCallback = (Request, Response) => Unit
+	private val LOG = org.slf4j.LoggerFactory.getLogger(classOf[ChameleonSession])
 
-	private val holder = new ThreadLocal[ScontSession]
+	private val holder = new ThreadLocal[ChameleonSession]
 
 	def session = holder.get()
 
-	def apply(callback: ScontCallback) = session.add(callback)
+	def apply(callback: ChameleonCallback) = session.add(callback)
 
 	def apply(request: Request, response: Response, start: => Unit, errorHandle: PartialFunction[Throwable, Unit]) {
-		val session = new ScontSession(request.getSession, request)
+		val session = new ChameleonSession(request.getSession, request)
 		holder.set(session)
 		try {
 			session.current match {

@@ -5,23 +5,23 @@ import javax.servlet.http.{HttpServletResponse => Response, HttpServletRequest =
 /**
  * @author tylers2
  */
-trait ScontServlet extends HttpServlet {
+trait ChameleonServlet extends HttpServlet {
 
-	import ScontSession.ScontCallback
+	import ChameleonSession.ChameleonCallback
 
 	override final def doGet(request: Request, response: Response) {
-		ScontSession(request, response, homePage(request, response), {
+		ChameleonSession(request, response, homePage(request, response), {
 			case infe: IdentifierNotFoundException => handleNotFound(infe.identifier, request, response)
 		})
 	}
 
-	def homePage: ScontCallback
+	def homePage: ChameleonCallback
 
 	private def handleNotFound(identifier: String, request: Request, response: Response) {
 		identifier match {
 			case "sessions" => listSessions(response)
 			case _ => {
-				ScontServlet.LOG.warn("IDENTIFIER NOT FOUND: " + identifier)
+				ChameleonServlet.LOG.warn("IDENTIFIER NOT FOUND: " + identifier)
 				response.sendError(Response.SC_NOT_FOUND)
 			}
 		}
@@ -32,7 +32,7 @@ trait ScontServlet extends HttpServlet {
 			<body>
 				<h1>Open Sessions</h1>
 				{
-				val list = ScontSession.session.all
+				val list = ChameleonSession.session.all
 				if (list.isEmpty) {
 					<div>There are no sessions</div>
 				} else {
@@ -65,6 +65,6 @@ trait ScontServlet extends HttpServlet {
 	}
 }
 
-object ScontServlet {
-	private val LOG = org.slf4j.LoggerFactory.getLogger(classOf[ScontServlet])
+object ChameleonServlet {
+	private val LOG = org.slf4j.LoggerFactory.getLogger(classOf[ChameleonServlet])
 }

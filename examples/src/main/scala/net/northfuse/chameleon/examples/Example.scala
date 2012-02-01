@@ -6,7 +6,7 @@ import net.northfuse.chameleon._
 /**
  * @author tylers2
  */
-object Example extends ScontServlet with HTMLView with JettyRunner {
+object Example extends ChameleonServlet with HTMLView with JettyRunner {
 
 	val LOG = org.slf4j.LoggerFactory.getLogger("net.northfuse.chameleon.Example")
 
