@@ -13,8 +13,9 @@
 	<artifactId>chameleon</artifactId>
 	<version>0.1.0-SNAPSHOT</version>
 	<packaging>jar</packaging>
-	<name>Scala Continuations</name>
+	<name>Chameleon Web Framework</name>
 	<description>
+		Web Framework using continuations
 	</description>
 
 	<licenses>
