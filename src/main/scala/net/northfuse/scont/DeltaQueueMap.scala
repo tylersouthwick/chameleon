@@ -1,68 +1,75 @@
 package net.northfuse.scont
 
-import collection.mutable.{Map, HashMap, PriorityQueue}
+import collection.mutable._
 
 
 /**
  * @author Tyler Southwick
  */
-class DeltaQueueMap[A, B](count : Int) extends Map[A, B] {
-  private val map = new HashMap[A, B]
+class DeltaQueueMap[A, B](count: Int) extends Map[A, B] {
+	private val map = new HashMap[A, B]
 
-  implicit object EvictionOrder extends Ordering[(Seq[A], Int)] {
-    def compare(x: (Seq[A], Int), y: (Seq[A], Int)) = x._2.compareTo(y._2)
-  }
+	private var evictQueue = Seq[(Seq[A], Int)]()
 
-  private var evictQueue = new PriorityQueue[(Seq[A], Int)]
+	def evictSeq = evictQueue
 
-  def get(key: A) = {
-    updateCounts()
-    map.get(key)
-  }
+	def get(key: A) = {
+		map.get(key) match {
+			case Some(value) => {
+				updateCounts()
+				Some(value)
+			}
+			case None => None
+		}
+	}
 
-  def iterator = {
-    updateCounts()
-    map.iterator
-  }
+	def iterator = {
+		updateCounts()
+		map.iterator
+	}
 
-  def +=(kv: (A, B)) = {
-    map += kv
-    val key = kv._1
-    val queueItem = evictQueue.lastOption match {
-      case Some(x) => {
-        if (x._2 == count) {
-          evictQueue = evictQueue.dropRight(1)
-          (x._1 ++ Seq(key), count)
-        } else {
-          (Seq(key), count)
-        }
-      }
-      case None => (Seq(key), count)
-    }
-    evictQueue += queueItem
-    println("added: " + evictQueue)
-    this
-  }
-  
-  private def updateCounts() {
-    println("updating counts: " + evictQueue)
-    evictQueue.headOption match {
-      case Some(x) => {
-        val keys = x._1
-        val count = x._2
-        evictQueue.dequeue()
-        if (count > 0) {
-          evictQueue += ((keys, count - 1))
-        } else {
-          keys.foreach(map.remove)
-        }
-      }
-      case None =>
-    }
-  }
+	def +=(kv: (A, B)) = {
+		map += kv
+		val key = kv._1
+		evictQueue = evictQueue.lastOption match {
+			case Some(x) => {
+				//if the last entry has the same count
+				if (x._2 == count) {
+					//remove the last element in the list and append a new tuple with the old list + the new key, and the old count
+					evictQueue.reverse.tail.reverse ++ Seq((Seq(key) ++ x._1, x._2))
+				} else {
+					//append the new one to the end of the list
+					evictQueue ++ Seq((Seq(key), count - x._2))
+				}
+			}
+			case None => Seq((Seq(key), count))
+		}
+		println("added: " + evictQueue)
+		this
+	}
 
-  def -=(key: A) = {
-    map -= key
-    this
-  }
+	private def updateCounts() {
+		println("updating counts: " + evictQueue)
+		println("keys: " + keys)
+		evictQueue = evictQueue.headOption match {
+			case Some(x) => {
+				val keys = x._1
+				val count = x._2
+				if (count > 1) {
+					Seq((keys, count - 1)) ++ evictQueue.tail
+				} else {
+					keys.foreach(map.remove)
+					evictQueue.tail
+				}
+			}
+			case None => evictQueue
+		}
+	}
+
+	def -=(key: A) = {
+		map -= key
+		this
+	}
+
+	override def keys = map.keys
 }
