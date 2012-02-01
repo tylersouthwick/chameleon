@@ -10,14 +10,12 @@ trait ScontServlet extends HttpServlet {
 	import ScontSession.ScontCallback
 
 	override final def doGet(request: Request, response: Response) {
-		ScontSession(request, response, {
-			homePage(request, response)
-		}, {
+		ScontSession(request, response, homePage(request, response), {
 			case infe: IdentifierNotFoundException => handleNotFound(infe.identifier, request, response)
 		})
 	}
 
-	def homePage(request : Request, response : Response)
+	def homePage : ScontCallback
 
 	private def handleNotFound(identifier: String, request: Request, response: Response) {
 		identifier match {

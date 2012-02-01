@@ -18,6 +18,9 @@ trait HTMLView {
 	def form(action: ScontCallback, body: NodeSeq) = <form action={url(action)} method="GET">
 		{body}
 	</form>
+
+	implicit def convertXmlToView(nodes : => NodeSeq) : ScontCallback = (request, response) => HTMLView(response)(nodes)
+	implicit def convertXmlToView(nodes : Request => NodeSeq) : ScontCallback = (request, response) => HTMLView(response)(nodes(request))
 }
 
 object HTMLView {
@@ -27,3 +30,4 @@ object HTMLView {
 		out.println(body)
 	}
 }
+
