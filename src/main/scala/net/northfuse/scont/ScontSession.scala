@@ -56,7 +56,7 @@ class ScontSession(session: Session, request: Request) {
 
 	def current = currentIdentifier match {
 		case None => None
-		case Some(identifier) => Some(getFromSession(identifier))
+		case Some(identifier) => Some((identifier, getFromSession(identifier)))
 	}
 
 	def all = lock {map.keysWithTimeout}
@@ -70,6 +70,7 @@ class ScontSession(session: Session, request: Request) {
 
 object ScontSession {
 	type ScontCallback = (Request, Response) => Unit
+	private val LOG = org.slf4j.LoggerFactory.getLogger(classOf[ScontSession])
 
 	private val holder = new ThreadLocal[ScontSession]
 
@@ -83,11 +84,11 @@ object ScontSession {
 		try {
 			session.current match {
 				case None => {
-					println("No identifier found... invoking start page")
+					LOG.debug("No identifier found... invoking start page")
 					start
 				}
-				case Some(callback) => {
-					println("found identifier... invoking callback [" + callback + "]")
+				case Some((identifier, callback)) => {
+					LOG.debug("found identifier... invoking callback [" + identifier + "]")
 					callback(request, response)
 				}
 			}

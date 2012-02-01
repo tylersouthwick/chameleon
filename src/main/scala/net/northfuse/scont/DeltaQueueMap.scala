@@ -13,6 +13,8 @@ class DeltaQueueMap[A, B](count: Int) extends Map[A, B] {
 
 	def evictSeq = evictQueue
 
+	import DeltaQueueMap.LOG
+
 	def get(key: A) = {
 		map.get(key) match {
 			case Some(value) => {
@@ -45,13 +47,15 @@ class DeltaQueueMap[A, B](count: Int) extends Map[A, B] {
 			}
 			case None => Seq((Seq(key), count))
 		}
-		println("added: " + evictQueue)
+		LOG.trace("added: " + evictQueue)
 		this
 	}
 
 	private def updateCounts() {
-		println("updating counts: " + evictQueue)
-		println("keys: " + keys)
+		if (LOG.isTraceEnabled) {
+			LOG.trace("updating counts: " + evictQueue)
+			LOG.trace("keys: " + keys)
+		}
 		evictQueue = evictQueue.headOption match {
 			case Some(x) => {
 				val keys = x._1
@@ -80,4 +84,8 @@ class DeltaQueueMap[A, B](count: Int) extends Map[A, B] {
 		}
 		case None => seq ++ keys.map((_, timeout))
 	}}
+}
+
+object DeltaQueueMap {
+	private val LOG = org.slf4j.LoggerFactory.getLogger(classOf[DeltaQueueMap[_, _]])
 }

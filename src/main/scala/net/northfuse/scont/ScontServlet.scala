@@ -21,7 +21,7 @@ trait ScontServlet extends HttpServlet {
 		identifier match {
 			case "sessions" => listSessions(response)
 			case _ => {
-				println("NOT FOUND: " + identifier)
+				ScontServlet.LOG.warn("IDENTIFIER NOT FOUND: " + identifier)
 				response.sendError(Response.SC_NOT_FOUND)
 			}
 		}
@@ -65,3 +65,6 @@ trait ScontServlet extends HttpServlet {
 	}
 }
 
+object ScontServlet {
+	private val LOG = org.slf4j.LoggerFactory.getLogger(classOf[ScontServlet])
+}
