@@ -20,6 +20,7 @@
 
 	<modules>
 		<module>core</module>
+		<module>examples</module>
 	</modules>
 
 	<licenses>
@@ -61,6 +62,13 @@
 
 	<dependencyManagement>
 		<dependencies>
+			<!-- chameleon -->
+			<dependency>
+				<groupId>${project.groupId}</groupId>
+				<artifactId>chameleon-core</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+
 			<!-- scala -->
 			<dependency>
 				<groupId>org.scala-lang</groupId>
