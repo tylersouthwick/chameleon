@@ -21,20 +21,6 @@ class DeltaQueueMapTest {
 
 	@Test
 	def checkDequeueMultiple() {
-		val map = new DeltaQueueMap[String, String](2)
-		map += "hello1" -> "test"
-		map += "hello2" -> "test"
-		Assert.assertSame(1, map.evictSeq.size)
-		def get1() = map.get("hello1").isDefined
-		def get2() = map.get("hello2").isDefined
-		Assert.assertTrue(get1())
-		Assert.assertTrue(get2())
-		Assert.assertFalse(get1())
-		Assert.assertFalse(get2())
-	}
-
-	@Test
-	def checkDequeueMultiple2() {
 		val map = new DeltaQueueMap[String, String](4)
 		map += "hello1" -> "test" //count = 4
 		map += "hello2" -> "test" //count = 4
@@ -61,6 +47,26 @@ class DeltaQueueMapTest {
 		Assert.assertEquals(Seq(), map.evictSeq)
 		Assert.assertEquals(Seq(), map.keysWithTimeout)
 		Assert.assertFalse(get3())
+	}
+	
+	@Test
+	def checkKeysWithTimeout() {
+		val map = new DeltaQueueMap[String, String](10)
+		map += "test1" -> "something1"
+		Assert.assertEquals(Seq((Seq("test1"), 10)), map.evictSeq)
+		map.get("test1")
+		Assert.assertEquals(Seq((Seq("test1"), 9)), map.evictSeq)
+		map += "test2" -> "something2"
+		Assert.assertEquals(Seq((Seq("test1"), 9), (Seq("test2"), 1)), map.evictSeq)
+		Assert.assertEquals(Seq(("test1", 9), ("test2", 10)), map.keysWithTimeout)
+
+		map.get("test1")
+		Assert.assertEquals(Seq((Seq("test1"), 8), (Seq("test2"), 1)), map.evictSeq)
+		Assert.assertEquals(Seq(("test1", 8), ("test2", 9)), map.keysWithTimeout)
+
+		map += "test3" -> "something3"
+		Assert.assertEquals(Seq((Seq("test1"), 8), (Seq("test2"), 1), (Seq("test3"), 1)), map.evictSeq)
+		Assert.assertEquals(Seq(("test1", 8), ("test2", 9), ("test3", 10)), map.keysWithTimeout)
 	}
 
 	@Test

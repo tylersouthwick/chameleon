@@ -39,7 +39,8 @@ class DeltaQueueMap[A, B](count: Int) extends Map[A, B] {
 					evictQueue.reverse.tail.reverse ++ Seq((Seq(key) ++ x._1, x._2))
 				} else {
 					//append the new one to the end of the list
-					evictQueue ++ Seq((Seq(key), count - x._2))
+					val totalValue = evictQueue.map(_._2).foldLeft(0){_+_}
+					evictQueue ++ Seq((Seq(key), count - totalValue))
 				}
 			}
 			case None => Seq((Seq(key), count))
