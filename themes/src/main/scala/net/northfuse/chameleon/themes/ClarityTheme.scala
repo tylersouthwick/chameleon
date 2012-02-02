@@ -1,6 +1,7 @@
 package net.northfuse.chameleon.themes
 
 import net.northfuse.chameleon.{Application, HTMLView}
+import xml.NodeSeq
 
 
 /**
@@ -13,24 +14,24 @@ object ClarityTheme extends HTMLView {
 	import Application.ChameleonCallback
 
 	type ClarityLinks = Seq[(String, ChameleonCallback)]
-	def apply(applicationName : String, links: ClarityLinks): HTMLFilter = (head, body) => {
+	def apply(title : String, links: ClarityLinks, footer : => NodeSeq = NodeSeq.Empty): HTMLFilter = (head, body) => {
 		LOG.debug("Applying Theme")
 		//find title
-		val title = (head \\ "title").text
+		val pageTitle = (head \\ "title").text
 		<html>
 			<head>
-				<title>{title}</title>
+				<title>{pageTitle}</title>
 				{css(myStyles)}{head}
 			</head>
 			<body>
 				<div id="header">
 					<h1>
 						<span id="pageTitle">
-							{title}
+							{pageTitle}
 						</span>
 					</h1>
 					<h3>
-						{applicationName}
+						{title}
 					</h3>
 					<ul id="nav">
 						{links.map {
@@ -49,7 +50,8 @@ object ClarityTheme extends HTMLView {
 					</div>
 				</div>
 				<div id="footer">
-					<p>copy 2012 northfuse</p>
+					Template Design by <a href="http://www.sixshootermedia.com/">Six Shooter Media</a>
+					{footer}
 				</div>
 			</body>
 		</html>
