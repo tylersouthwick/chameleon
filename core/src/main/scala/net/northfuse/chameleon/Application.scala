@@ -18,7 +18,7 @@ trait Application extends IdentifierHandler with HTMLView {
 
 	def homePage: ChameleonCallback
 
-	def handleError(t : Throwable) : ChameleonCallback = {
+	def handleError(t : Throwable) = {
 		<body>
 			<h1>There was an error!</h1>
 			{t.getMessage}
@@ -44,12 +44,14 @@ trait Application extends IdentifierHandler with HTMLView {
 		}
 	}
 
-	def notFound(identifier : String) : ChameleonCallback = (request, response) => {
-		Application.LOG.debug("IDENTIFIER NOT FOUND: " + identifier)
-		response.sendError(Response.SC_NOT_FOUND)
+	def notFound(identifier : String) = {
+		<body>
+			<p>Page Not Found</p>
+			<p>{link(homePage, "Return to home page")}</p>
+		</body>
 	}
 
-	final def listSessions : ChameleonCallback = {
+	final def listSessions = {
 		<body>
 			<h1>Open Sessions</h1>
 			{

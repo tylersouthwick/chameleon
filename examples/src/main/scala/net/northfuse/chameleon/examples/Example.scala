@@ -93,10 +93,4 @@ object Example extends ChameleonServlet with HTMLView with JettyRunner {
 
 	override def filters = super.filters ++ Seq(theme)
 
-	override def notFound(identifier : String) = {
-		<body>
-			<p>Page Not Found</p>
-			<p>{link(homePage, "Return to home page")}</p>
-		</body>
-	}
 }
