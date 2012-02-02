@@ -80,7 +80,7 @@ object Example extends ChameleonServlet with HTMLView with JettyRunner {
 		</body>
 	}
 
-	val clarityTheme = ClarityTheme(
+	val clarityTheme = ClarityTheme("Example Application",
 		Seq(
 			"Home1" -> home1,
 			"Home2" -> home2

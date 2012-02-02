@@ -9,12 +9,11 @@ import net.northfuse.chameleon.{ChameleonSession, HTMLView}
 object ClarityTheme extends HTMLView {
 
 	val LOG = org.slf4j.LoggerFactory.getLogger("net.northfuse.chameleon.examples.ClarityTheme")
-	val subTitle = "Example Application"
 
 	import ChameleonSession.ChameleonCallback
 
 	type ClarityLinks = Seq[(String, ChameleonCallback)]
-	def apply(links: ClarityLinks): HTMLFilter = (head, body) => {
+	def apply(applicationName : String, links: ClarityLinks): HTMLFilter = (head, body) => {
 		LOG.debug("Applying Theme")
 		//find title
 		val title = (head \\ "title").text
@@ -31,7 +30,7 @@ object ClarityTheme extends HTMLView {
 						</span>
 					</h1>
 					<h3>
-						{subTitle}
+						{applicationName}
 					</h3>
 					<ul id="nav">
 						{links.map {
