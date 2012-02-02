@@ -10,19 +10,14 @@ object Example extends ChameleonServlet with HTMLView with JettyRunner {
 
 	val LOG = org.slf4j.LoggerFactory.getLogger("net.northfuse.chameleon.Example")
 
-	def homePage = {
-		LOG.info("showing home page....")
-		<body>
-			<p>Hello world!</p>{link(callback = test1, body = "my test1")}
-		</body>
-	}
+	def homePage = home1
 
 	def test1 = {
 		LOG.info("showing test1...")
 		<body>
 			<p>test1!</p>{form(handleForm, {
 				<input type="text" name="data1"/>
-						<input type="submit"/>
+					<input type="submit"/>
 		})}
 		</body>
 	}
@@ -39,7 +34,7 @@ object Example extends ChameleonServlet with HTMLView with JettyRunner {
 	/**
 	 * Currying example
 	 */
-	def showAnswer(answer : String) = {
+	def showAnswer(answer: String) = {
 		LOG.info("showing answer..." + answer)
 		<body>
 			<h1>Your answer was
@@ -48,4 +43,19 @@ object Example extends ChameleonServlet with HTMLView with JettyRunner {
 		</body>
 	}
 
+	def home1 : ChameleonSession.ChameleonCallback = {
+		<body>
+			<div>home1</div>
+		</body>
+	}
+
+	def home2 : ChameleonSession.ChameleonCallback = {
+		<body>
+			<div>home2</div>
+		</body>
+	}
+
+	val links = Seq(("Home1", home1), ("Home2", home2))
+
+	override def filters = Seq(ClarityTheme(links))
 }

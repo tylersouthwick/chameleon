@@ -1,0 +1,260 @@
+/* CSS Document */
+
+body {
+	background: #fff;
+	font: 16px/1.95em "Lucida Grande", "Lucida Sans Unicode", geneva, verdana, sans-serif;
+	margin: 0;
+	color: #666;
+	padding-top: 20px;
+	border: 3px solid #eee;
+}
+
+html {
+	border: 15px solid #f6f6f6;
+	border-left: 30px solid #f6f6f6;
+	border-right: 30px solid #f6f6f6;
+}
+
+* {
+	margin: 0;
+	padding: 0;
+	outline: none;
+}
+
+#footer {
+	padding: 20px 50px;
+	margin-top: 50px;
+	clear: both;
+	border-top: 2px solid #eee;
+	font: 80% Verdana;
+	line-height: 25px;
+	text-align: center;
+}
+
+#footer a {
+	color: #999;
+}
+
+#footer .validate {
+	float: right;
+}
+
+table {
+	width: 100%;
+	padding: 10px;
+	border: 1px solid #eee;
+}
+
+th {
+	color: #6CCC26;
+	padding: 5px;
+}
+
+thead th {
+	border-bottom: 1px solid #eee;
+}
+
+tr td {
+	background-color: #fff;
+	color: #666;
+}
+
+tbody tr:hover td {
+	color: #fff;
+	background-color: #666;
+}
+
+tbody tr:hover td a {
+	color: #fff;
+}
+
+td {
+	padding: 5px;
+	text-align: center;
+	background: #fafafa;
+}
+
+#container {
+	width: 95%;
+	margin: 0 auto;
+}
+
+#content ul .list {
+	margin: 15px 0 15px 25px;
+}
+
+#content ul .list li {
+	border-bottom: 1px solid #eee;
+	padding: 10px;
+	color: #444;
+}
+
+#content img {
+	background: #fff;
+	padding: 1px;
+	border: 3px solid #eee;
+	margin: 10px;
+}
+
+#content h3 {
+	margin: 20px 0;
+}
+
+blockquote {
+	background: #f6f6f6;
+	padding: 0 10px;
+	border: 1px solid #eee;
+	font: 100% Georgia;
+}
+
+#content p {
+	line-height: 30px;
+	margin: 20px 0;
+	word-spacing: 2px;
+}
+
+#content p a {
+	color: #222;
+	text-decoration: none;
+	border-bottom: 1px solid #ccc;
+}
+
+#content p a:hover {
+	border-bottom: 1px solid #aaa;
+}
+
+#content h2 {
+	font: 190% Times;
+	margin-top: 45px;
+}
+
+#content h2 a {
+	color: #333;
+	text-decoration: none;
+}
+
+#header {
+	width: 100%;
+	margin: 0 auto;
+	padding: 0px 0;
+}
+
+.loginInfo {
+	position: absolute;
+	top: 18px;
+	right: 40px;
+}
+
+#header .right {
+	float: right;
+}
+
+#header h1 {
+	font: 290% Times New Roman;
+	letter-spacing: -2px;
+	margin-left: 35px;
+}
+
+#header h1 a {
+	color: #000;
+	text-decoration: none;
+}
+
+#header h1 a span {
+	color: #ccc;
+}
+
+#header h1 a:hover span {
+	color: #A3E800;
+}
+
+#header h3 {
+	font: 90% Verdana;
+	color: #999;
+	display: inline;
+	margin-left: 35px;
+}
+
+ul#nav {
+	background: #8EDF53;
+	padding: 10px;
+	font-size: 80%;
+	border-top: 3px solid #6CCC26;
+	border-bottom: 3px solid #6CCC26;
+	font-weight: bold;
+	margin: 5px 0 0 0;
+}
+
+ul#nav li {
+	display: inline;
+	list-style: none;
+	margin-right: 10px;
+}
+
+ul#nav li a {
+	padding: 10px 14px;
+	color: #fff;
+	text-decoration: none;
+}
+
+ul#nav li a:hover {
+	background: #7EDB39;
+	color: #fff;
+}
+
+ul#nav li a.active {
+	background: #fff;
+	color: #333;
+	border-right: 2px solid #6CCC26;
+	border-bottom: 2px solid #6CCC26;
+}
+
+p.about {
+	border-top: 3px solid #6CCC26;
+	border-bottom: 3px solid #6CCC26;
+	color: #fff;
+	background: #8EDF53;
+	padding: 10px;
+}
+
+p.about a {
+	color: #fff;
+}
+
+a {
+	text-decoration: none;
+	color: black;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+tr.accountRow td {
+	text-align: left;
+}
+
+.loadingAjax {
+	background-image: url("../images/ajax-loader.gif");
+}
+
+.loading {
+	background-image: url("../images/ajax-loader.gif");
+	background-repeat: no-repeat;
+	width: 300px;
+	height: 60px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.negativeMoney {
+	color: gray;
+}
+
+.moneyToFormat {
+	display: none;
+}
+
+#content h2.innerHeader {
+	margin-top: 0px;
+}
