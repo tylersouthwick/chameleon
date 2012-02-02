@@ -22,6 +22,16 @@ trait ChameleonServlet extends HttpServlet with HTMLView {
 		<body>
 			<h1>There was an error!</h1>
 			{t.getMessage}
+			<pre>
+				{
+				import java.io._
+				val baos = new ByteArrayOutputStream
+				val writer = new PrintWriter(baos)
+				t.printStackTrace(writer)
+				writer.close()
+				baos.toString
+				}
+			</pre>
 		</body>
 	}
 
