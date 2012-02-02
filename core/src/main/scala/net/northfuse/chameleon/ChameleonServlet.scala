@@ -12,10 +12,18 @@ trait ChameleonServlet extends HttpServlet with HTMLView {
 	override final def doGet(request: Request, response: Response) {
 		ChameleonSession(request, response, homePage(request, response), {
 			case infe: IdentifierNotFoundException => handleNotFound(infe.identifier, request, response)
+			case t : Throwable => handleError(t)(request, response)
 		})
 	}
 
 	def homePage: ChameleonCallback
+
+	def handleError(t : Throwable) : ChameleonCallback = {
+		<body>
+			<h1>There was an error!</h1>
+			{t.getMessage}
+		</body>
+	}
 
 	private def handleNotFound(identifier: String, request: Request, response: Response) {
 		identifier match {

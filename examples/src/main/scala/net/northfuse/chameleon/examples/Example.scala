@@ -43,7 +43,12 @@ object Example extends ChameleonServlet with HTMLView with JettyRunner {
 		</body>
 	}
 
-	def home1 : ChameleonSession.ChameleonCallback = {
+	import ChameleonSession.ChameleonCallback
+
+	def home1 : ChameleonCallback = {
+		println("rendering home")
+		val x = 0
+		val y = 5/x
 		<body>
 			<div>home1</div>
 			{form(processAnswer, {
@@ -71,13 +76,13 @@ object Example extends ChameleonServlet with HTMLView with JettyRunner {
 		</body>
 	}
 
-	def home2 : ChameleonSession.ChameleonCallback = {
+	def home2 : ChameleonCallback = {
 		<body>
 			<div>home2</div>
 		</body>
 	}
 
-	val links = Seq(("Home1", home1), ("Home2", home2))
+	val links : Seq[(String, ChameleonCallback)] = Seq()//Seq(("Home1", home1), ("Home2", home2))
 
 	override def filters = super.filters ++ Seq(ClarityTheme(links))
 
