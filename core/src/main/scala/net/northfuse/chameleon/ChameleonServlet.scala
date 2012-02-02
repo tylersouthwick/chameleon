@@ -12,6 +12,10 @@ trait ChameleonServlet extends HttpServlet with Application {
 		handle(request, response)
 	}
 
+	override def doPost(request: HttpServletRequest, response: HttpServletResponse) {
+		handle(request, response)
+	}
+
 	final def findIdentifier(request: HttpServletRequest) = {
 		val id = {
 			val pathInfo = request.getPathInfo

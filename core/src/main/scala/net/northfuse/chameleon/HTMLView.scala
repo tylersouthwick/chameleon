@@ -1,8 +1,8 @@
 package net.northfuse.chameleon
 
-import javax.servlet.http.{HttpServletResponse => Response, HttpServletRequest => Request}
 import io.Source
 import xml._
+import javax.servlet.http.{HttpServletRequestWrapper, HttpServletResponse => Response, HttpServletRequest => Request}
 
 /**
  * @author tylers2
@@ -19,7 +19,38 @@ trait HTMLView {
 		{body}
 	</a>
 
-	def form(action: ChameleonCallback, body: NodeSeq) = <form action={url(action)} method="GET">
+	/**
+	 * Follows the POST-REDIRECT-GET pattern so that the user will never get a warning to resubmit a form.
+	 * @param callback The callback that needs to get handled.
+	 * @return A url to the wrapped callback
+	 */
+	def formAction(callback : ChameleonCallback) = url((request, response) => {
+		val parameters = request.getParameterMap.asInstanceOf[java.util.Map[String, Array[String]]]
+		response.sendRedirect(url((request, response) =>
+				callback(new HttpServletRequestWrapper(request) {
+					override def getParameterMap = parameters
+					override def getParameterValues(name : String) = parameters.get(name)
+					override def getParameter(name : String) = {
+						val value = parameters.get(name)
+						if (value.size > 0) {
+							value(0)
+						} else {
+							null
+						}
+					}
+					//override def getParameterNames = parameters.keySet.iterator
+				}, response)
+		))}
+	)
+
+	/**
+	 * Builds a form with the specified action.
+	 *
+	 * @param action The action to preform on submition
+	 * @param body The form body
+	 * @return The xhtml of the form
+	 */
+	def form(action: ChameleonCallback, body: NodeSeq) = <form action={formAction(action)} method="POST">
 		{body}
 	</form>
 
