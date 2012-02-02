@@ -1,6 +1,6 @@
 package net.northfuse.chameleon.examples
 
-import net.northfuse.chameleon.{Application, ChameleonSession, HTMLView}
+import net.northfuse.chameleon.{Application, HTMLView}
 
 
 /**
