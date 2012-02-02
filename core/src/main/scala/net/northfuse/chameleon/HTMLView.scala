@@ -58,6 +58,15 @@ trait HTMLView {
 		def apply(request : Request) : T
 	}
 
+	type PageWithTitle = (String, NodeSeq)
+
+	implicit def convertPageWithTitle(page : PageWithTitle) = <html>
+		<head>
+			<title>{page._1}</title>
+		</head>
+		<body>{page._2}</body>
+	</html>
+
 	implicit def convertXmlToView(nodes:  => NodeSeq): ChameleonCallback = {
 		LOG.debug("converting xml to view")
 		(request, response) => {
@@ -66,12 +75,19 @@ trait HTMLView {
 		}
 	}
 
-	implicit def convertXmlToView(nodes: (Request) => NodeSeq): ChameleonCallback = (request, response) => {
+	implicit def convertPageWithTitleToView(nodes:  => PageWithTitle) = convertXmlToView(nodes)
+
+	implicit def convertXmlRequestToView(nodes: (Request) => NodeSeq): ChameleonCallback = (request, response) => {
 		LOG.debug("calling HTMLView")
 		HTMLView(response)(filter(nodes(request)))
 	}
 
 	def parser[T] (nodes : T => NodeSeq) (implicit parser : RequestParser[T]) : ChameleonCallback = (request, response) => {
+		LOG.debug("calling HTMLView")
+		HTMLView(response)(filter(nodes(parser(request))))
+	}
+
+	def parser2[T] (nodes : T => PageWithTitle) (implicit parser : RequestParser[T]) : ChameleonCallback = (request, response) => {
 		LOG.debug("calling HTMLView")
 		HTMLView(response)(filter(nodes(parser(request))))
 	}

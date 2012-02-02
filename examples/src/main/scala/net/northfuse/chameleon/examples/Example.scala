@@ -44,7 +44,7 @@ object Example extends ChameleonServlet with HTMLView with JettyRunner {
 		</body>
 	}
 
-	def home1 : NodeSeq = {
+	def home1 : PageWithTitle = "home1" -> {
 		LOG.info("rendering home1")
 		<body>
 			<div>home1</div>

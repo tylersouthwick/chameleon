@@ -10,15 +10,17 @@ object ClarityTheme extends HTMLView {
 
 	val LOG = org.slf4j.LoggerFactory.getLogger("net.northfuse.chameleon.examples.ClarityTheme")
 	val subTitle = "Example Application"
-	val title = "mytitle"
 
 	import ChameleonSession.ChameleonCallback
 
 	type ClarityLinks = Seq[(String, ChameleonCallback)]
 	def apply(links: ClarityLinks): HTMLFilter = (head, body) => {
 		LOG.debug("Applying Theme")
+		//find title
+		val title = (head \\ "title").text
 		<html>
 			<head>
+				<title>{title}</title>
 				{css(myStyles)}{head}
 			</head>
 			<body>
