@@ -8,7 +8,7 @@ import net.northfuse.chameleon._
  */
 object Example extends ChameleonServlet with HTMLView with JettyRunner {
 
-	val LOG = org.slf4j.LoggerFactory.getLogger("net.northfuse.chameleon.Example")
+	val LOG = org.slf4j.LoggerFactory.getLogger("net.northfuse.chameleon.examples.Example")
 
 	def homePage = home1
 
