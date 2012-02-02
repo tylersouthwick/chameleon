@@ -11,6 +11,8 @@ trait HTMLView {
 
 	import ChameleonSession.ChameleonCallback
 
+	import HTMLView.LOG
+
 	def url(callback: ChameleonCallback) = ChameleonSession(callback)
 
 	def link(callback: ChameleonCallback, body: String) = <a href={url(callback)}>
@@ -52,26 +54,44 @@ trait HTMLView {
 		}
 	}
 	//todo improve this
-	def filter(nodes: NodeSeq) = filters.foldLeft(nodes) {
-		(nodes, filter) =>
-			val head = Seq[Node]()
-			val body = nodes.children
-			filter(head, body)
+	def filter(nodes: NodeSeq) = {
+		LOG.debug("applying filters")
+		filters.foldLeft(nodes) {
+			(nodes, filter) =>
+				val head = Seq[Node]()
+				val body = nodes.children
+				filter(head, body)
+		}
 	}
 
 	trait RequestParser[T] {
 		def apply(request : Request) : T
 	}
 
-	implicit def convertXmlToView(nodes: => NodeSeq): ChameleonCallback = (request, response) => HTMLView(response)(filter(nodes))
+	implicit def convertXmlToView(nodes:  => NodeSeq): ChameleonCallback = {
+		LOG.debug("converting xml to view")
+		(request, response) => {
+			LOG.debug("calling HTMLView")
+			HTMLView(response)(filter(nodes))
+		}
+	}
 
-	implicit def convertXmlToView(nodes: Request => NodeSeq): ChameleonCallback = (request, response) => HTMLView(response)(filter(nodes(request)))
+	implicit def convertXmlToView(nodes: (Request) => NodeSeq): ChameleonCallback = (request, response) => {
+		LOG.debug("calling HTMLView")
+		HTMLView(response)(filter(nodes(request)))
+	}
 
-	def parser[T] (nodes : T => NodeSeq) (implicit parser : RequestParser[T]) : ChameleonCallback = (request, response) => HTMLView(response)(filter(nodes(parser(request))))
+	def parser[T] (nodes : T => NodeSeq) (implicit parser : RequestParser[T]) : ChameleonCallback = (request, response) => {
+		LOG.debug("calling HTMLView")
+		HTMLView(response)(filter(nodes(parser(request))))
+	}
 }
 
 object HTMLView {
-	def apply(response: Response)(body: NodeSeq) {
+	private val LOG = org.slf4j.LoggerFactory.getLogger(classOf[HTMLView])
+	
+	def apply(response: Response)(body: => NodeSeq) {
+		LOG.debug("applying HTML View")
 		response.setHeader("Content-type", "text/html")
 		val out = new java.io.PrintWriter(response.getOutputStream, true)
 		out.println(body)
