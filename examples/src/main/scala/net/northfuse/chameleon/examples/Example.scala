@@ -1,6 +1,7 @@
 package net.northfuse.chameleon.examples
 
 import net.northfuse.chameleon._
+import themes._
 import javax.servlet.http.{HttpServletRequest => Request}
 
 /**

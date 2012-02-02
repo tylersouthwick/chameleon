@@ -1,4 +1,4 @@
-package net.northfuse.chameleon.examples
+package net.northfuse.chameleon.themes
 
 import net.northfuse.chameleon.{Application, HTMLView}
 

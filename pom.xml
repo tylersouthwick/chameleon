@@ -20,6 +20,7 @@
 
 	<modules>
 		<module>core</module>
+		<module>themes</module>
 		<module>examples</module>
 	</modules>
 
@@ -66,6 +67,11 @@
 			<dependency>
 				<groupId>${project.groupId}</groupId>
 				<artifactId>chameleon-core</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>${project.groupId}</groupId>
+				<artifactId>chameleon-themes</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 
