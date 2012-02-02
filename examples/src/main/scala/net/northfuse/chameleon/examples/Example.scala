@@ -63,13 +63,13 @@ object Example extends ChameleonServlet with HTMLView with JettyRunner {
 		}
 	}
 	
-	def processAnswer = parser((answer : FormAnswer) => {
+	def processAnswer = parser { (answer : FormAnswer) =>
 		<body>
 			<div>Answered Question!</div>
 			<p>Your name is {answer.name}</p>
 			{link(home1, "Return to home1")}
 		</body>
-	})
+	}
 
 	def home2 : ChameleonSession.ChameleonCallback = {
 		<body>
