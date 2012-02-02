@@ -8,10 +8,15 @@ import net.northfuse.chameleon.{ChameleonSession, HTMLView}
  */
 object ClarityTheme extends HTMLView {
 
+	val LOG = org.slf4j.LoggerFactory.getLogger("net.northfuse.chameleon.examples.ClarityTheme")
 	val subTitle = "Example Application"
 	val title = "mytitle"
 
-	def apply(links: Seq[(String, ChameleonSession.ChameleonCallback)]): HTMLFilter = (head, body) => {
+	import ChameleonSession.ChameleonCallback
+
+	type ClarityLinks = Seq[(String, ChameleonCallback)]
+	def apply(links: ClarityLinks): HTMLFilter = (head, body) => {
+		LOG.debug("Applying Theme")
 		<html>
 			<head>
 				{css(myStyles)}{head}

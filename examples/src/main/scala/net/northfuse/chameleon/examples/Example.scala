@@ -2,13 +2,14 @@ package net.northfuse.chameleon.examples
 
 import net.northfuse.chameleon._
 import javax.servlet.http.{HttpServletRequest => Request}
+import xml.NodeSeq
 
 /**
  * @author tylers2
  */
 object Example extends ChameleonServlet with HTMLView with JettyRunner {
 
-	val LOG = org.slf4j.LoggerFactory.getLogger("net.northfuse.chameleon.examples.Example")
+	private val LOG = org.slf4j.LoggerFactory.getLogger("net.northfuse.chameleon.examples.Example")
 
 	def homePage = home1
 
@@ -43,12 +44,10 @@ object Example extends ChameleonServlet with HTMLView with JettyRunner {
 		</body>
 	}
 
-	import ChameleonSession.ChameleonCallback
-
-	def home1 : ChameleonCallback = {
-		println("rendering home")
+	def home1 : NodeSeq = {
+		LOG.info("rendering home1")
 		val x = 0
-		val y = 5/x
+		//val y = 5/x
 		<body>
 			<div>home1</div>
 			{form(processAnswer, {
@@ -76,15 +75,21 @@ object Example extends ChameleonServlet with HTMLView with JettyRunner {
 		</body>
 	}
 
-	def home2 : ChameleonCallback = {
+	def home2 = {
+		LOG.info("rendering home2")
 		<body>
 			<div>home2</div>
 		</body>
 	}
 
-	val links : Seq[(String, ChameleonCallback)] = Seq()//Seq(("Home1", home1), ("Home2", home2))
+	val theme = ClarityTheme(
+		Seq(
+			"Home1" -> home1,
+			"Home2" -> home2
+		)
+	)
 
-	override def filters = super.filters ++ Seq(ClarityTheme(links))
+	override def filters = super.filters ++ Seq(theme)
 
 	override def notFound(identifier : String) = {
 		<body>
