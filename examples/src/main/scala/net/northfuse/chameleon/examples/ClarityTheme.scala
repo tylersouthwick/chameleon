@@ -1,6 +1,6 @@
 package net.northfuse.chameleon.examples
 
-import net.northfuse.chameleon.{ChameleonSession, HTMLView}
+import net.northfuse.chameleon.{Application, ChameleonSession, HTMLView}
 
 
 /**
@@ -10,7 +10,7 @@ object ClarityTheme extends HTMLView {
 
 	val LOG = org.slf4j.LoggerFactory.getLogger("net.northfuse.chameleon.examples.ClarityTheme")
 
-	import ChameleonSession.ChameleonCallback
+	import Application.ChameleonCallback
 
 	type ClarityLinks = Seq[(String, ChameleonCallback)]
 	def apply(applicationName : String, links: ClarityLinks): HTMLFilter = (head, body) => {

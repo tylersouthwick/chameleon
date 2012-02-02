@@ -1,90 +1,26 @@
 package net.northfuse.chameleon
 
-import javax.servlet.http.{HttpServletResponse => Response, HttpServletRequest => Request, HttpServlet}
+import javax.servlet.http.{HttpServletResponse, HttpServletRequest, HttpServlet}
+
 
 /**
  * @author tylers2
  */
-trait ChameleonServlet extends HttpServlet with HTMLView {
+trait ChameleonServlet extends HttpServlet with Application {
 
-	import ChameleonSession.ChameleonCallback
-
-	override final def doGet(request: Request, response: Response) {
-		ChameleonSession(request, response, homePage(request, response), {
-			case infe: IdentifierNotFoundException => handleNotFound(infe.identifier, request, response)
-			case t : Throwable => handleError(t)(request, response)
-		})
+	override def doGet(request: HttpServletRequest, response: HttpServletResponse) {
+		handle(request, response)
 	}
 
-	def homePage: ChameleonCallback
-
-	def handleError(t : Throwable) : ChameleonCallback = {
-		<body>
-			<h1>There was an error!</h1>
-			{t.getMessage}
-			<pre>
-				{
-				import java.io._
-				val baos = new ByteArrayOutputStream
-				val writer = new PrintWriter(baos)
-				t.printStackTrace(writer)
-				writer.close()
-				baos.toString
-				}
-			</pre>
-		</body>
-	}
-
-	private def handleNotFound(identifier: String, request: Request, response: Response) {
-		identifier match {
-			case "sessions" => listSessions(request, response)
-			case _ => {
-				notFound(identifier)(request, response)
-			}
+	final def findIdentifier(request: HttpServletRequest) = {
+		val id = {
+			val pathInfo = request.getPathInfo
+			if (pathInfo != null && pathInfo.startsWith("/")) {
+				pathInfo.substring(1)
+			} else pathInfo
 		}
+		if (id == null || id.trim().isEmpty) None else Some(id)
 	}
 
-	def notFound(identifier : String) : ChameleonCallback = (request, response) => {
-		ChameleonServlet.LOG.debug("IDENTIFIER NOT FOUND: " + identifier)
-		response.sendError(Response.SC_NOT_FOUND)
-	}
-
-	final def listSessions : ChameleonCallback = {
-		<body>
-			<h1>Open Sessions</h1>
-			{
-			val list = ChameleonSession.session.all
-			if (list.isEmpty) {
-				<div>There are no sessions</div>
-			} else {
-				<style>
-					tbody tr:hover {"{background-color: lightgray}"}
-				</style>
-				<table>
-					<thead>
-					<tr>
-						<th>Session Id</th>
-						<th>TTL</th>
-					</tr>
-					</thead>
-					<tbody>
-					{list.map {case (id, timeout) =>
-						<tr>
-							<td>
-								<a href={"/" + id}>{id}</a>
-							</td>
-							<td>
-								{timeout}
-							</td>
-						</tr>
-					}}
-					</tbody>
-				</table>
-			}}
-		</body>
-	}
-}
-
-object ChameleonServlet {
-	private val LOG = org.slf4j.LoggerFactory.getLogger(classOf[ChameleonServlet])
+	final def buildUrl(identifier: String, request: HttpServletRequest) = request.getContextPath + "/" + identifier
 }

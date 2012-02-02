@@ -9,11 +9,11 @@ import xml._
  */
 trait HTMLView {
 
-	import ChameleonSession.ChameleonCallback
+	import Application.ChameleonCallback
 
 	import HTMLView.LOG
 
-	def url(callback: ChameleonCallback) = ChameleonSession(callback)
+	def url(callback: ChameleonCallback) = Application.url(callback)
 
 	def link(callback: ChameleonCallback, body: String) = <a href={url(callback)}>
 		{body}

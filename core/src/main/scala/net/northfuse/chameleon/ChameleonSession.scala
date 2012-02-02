@@ -8,9 +8,9 @@ import java.math.BigInteger
 /**
  * @author tylers2
  */
-class ChameleonSession(session: Session, request: Request) {
+class ChameleonSession(identifierHandler : IdentifierHandler, session: Session, request: Request) {
 
-	import ChameleonSession.ChameleonCallback
+	import Application.ChameleonCallback
 	val sessionAttribute = "chameleonSession"
 
 	def add(callback: ChameleonCallback) = {
@@ -49,15 +49,7 @@ class ChameleonSession(session: Session, request: Request) {
 		new BigInteger(guid, 16).toString(36)
 	}
 
-	val currentIdentifier = {
-		val id = {
-			val pathInfo = request.getPathInfo
-			if (pathInfo != null && pathInfo.startsWith("/")) {
-				pathInfo.substring(1)
-			} else pathInfo
-		}
-		if (id == null || id.trim().isEmpty) None else Some(id)
-	}
+	val currentIdentifier = identifierHandler.findIdentifier(request)
 
 	def current = currentIdentifier match {
 		case None => None
@@ -69,37 +61,6 @@ class ChameleonSession(session: Session, request: Request) {
 	def lock[T](callback : => T) = {
 		session synchronized {
 			callback
-		}
-	}
-}
-
-object ChameleonSession {
-	type ChameleonCallback = (Request, Response) => Unit
-	private val LOG = org.slf4j.LoggerFactory.getLogger(classOf[ChameleonSession])
-
-	private val holder = new ThreadLocal[ChameleonSession]
-
-	def session = holder.get()
-
-	def apply(callback: ChameleonCallback) = session.add(callback)
-
-	def apply(request: Request, response: Response, start: => Unit, errorHandle: PartialFunction[Throwable, Unit]) {
-		val session = new ChameleonSession(request.getSession, request)
-		holder.set(session)
-		try {
-			session.current match {
-				case None => {
-					LOG.debug("No identifier found... invoking start page")
-					start
-				}
-				case Some((identifier, callback)) => {
-					LOG.debug("found identifier... invoking callback [" + identifier + "]")
-					callback(request, response)
-				}
-			}
-		} catch errorHandle
-		finally {
-			holder.remove()
 		}
 	}
 }

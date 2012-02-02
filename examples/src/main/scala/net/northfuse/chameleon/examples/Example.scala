@@ -2,7 +2,6 @@ package net.northfuse.chameleon.examples
 
 import net.northfuse.chameleon._
 import javax.servlet.http.{HttpServletRequest => Request}
-import xml.NodeSeq
 
 /**
  * @author tylers2
