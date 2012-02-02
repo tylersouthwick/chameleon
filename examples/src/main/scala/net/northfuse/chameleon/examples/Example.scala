@@ -46,8 +46,6 @@ object Example extends ChameleonServlet with HTMLView with JettyRunner {
 
 	def home1 : NodeSeq = {
 		LOG.info("rendering home1")
-		val x = 0
-		//val y = 5/x
 		<body>
 			<div>home1</div>
 			{form(processAnswer, {
@@ -82,12 +80,14 @@ object Example extends ChameleonServlet with HTMLView with JettyRunner {
 		</body>
 	}
 
-	val theme = ClarityTheme(
+	val clarityTheme = ClarityTheme(
 		Seq(
 			"Home1" -> home1,
 			"Home2" -> home2
 		)
 	)
+
+	def theme = clarityTheme
 
 	override def filters = super.filters ++ Seq(theme)
 

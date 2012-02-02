@@ -54,6 +54,5 @@ object ClarityTheme extends HTMLView {
 		</html>
 	}
 
-	//def myStyles = "https://denhgi.northfuse.net/resources-0.12.3/css/style.css"
 	val myStyles = cssClassPath("/styles/clarity.css")
 }
