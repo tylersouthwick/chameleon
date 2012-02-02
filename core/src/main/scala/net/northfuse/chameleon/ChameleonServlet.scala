@@ -5,7 +5,7 @@ import javax.servlet.http.{HttpServletResponse => Response, HttpServletRequest =
 /**
  * @author tylers2
  */
-trait ChameleonServlet extends HttpServlet {
+trait ChameleonServlet extends HttpServlet with HTMLView {
 
 	import ChameleonSession.ChameleonCallback
 
@@ -19,49 +19,51 @@ trait ChameleonServlet extends HttpServlet {
 
 	private def handleNotFound(identifier: String, request: Request, response: Response) {
 		identifier match {
-			case "sessions" => listSessions(response)
+			case "sessions" => listSessions(request, response)
 			case _ => {
-				ChameleonServlet.LOG.warn("IDENTIFIER NOT FOUND: " + identifier)
-				response.sendError(Response.SC_NOT_FOUND)
+				notFound(identifier)(request, response)
 			}
 		}
 	}
 
-	private def listSessions(response: Response) {
-		HTMLView(response) {
-			<body>
-				<h1>Open Sessions</h1>
-				{
-				val list = ChameleonSession.session.all
-				if (list.isEmpty) {
-					<div>There are no sessions</div>
-				} else {
-					<style>
-						tbody tr:hover {"{background-color: lightgray}"}
-					</style>
-					<table>
-						<thead>
+	def notFound(identifier : String) : ChameleonCallback = (request, response) => {
+		ChameleonServlet.LOG.debug("IDENTIFIER NOT FOUND: " + identifier)
+		response.sendError(Response.SC_NOT_FOUND)
+	}
+
+	final def listSessions : ChameleonCallback = {
+		<body>
+			<h1>Open Sessions</h1>
+			{
+			val list = ChameleonSession.session.all
+			if (list.isEmpty) {
+				<div>There are no sessions</div>
+			} else {
+				<style>
+					tbody tr:hover {"{background-color: lightgray}"}
+				</style>
+				<table>
+					<thead>
+					<tr>
+						<th>Session Id</th>
+						<th>TTL</th>
+					</tr>
+					</thead>
+					<tbody>
+					{list.map {case (id, timeout) =>
 						<tr>
-							<th>Session Id</th>
-							<th>TTL</th>
+							<td>
+								<a href={"/" + id}>{id}</a>
+							</td>
+							<td>
+								{timeout}
+							</td>
 						</tr>
-						</thead>
-						<tbody>
-						{list.map {case (id, timeout) =>
-							<tr>
-								<td>
-									<a href={"/" + id}>{id}</a>
-								</td>
-								<td>
-									{timeout}
-								</td>
-							</tr>
-						}}
-						</tbody>
-					</table>
-				}}
-			</body>
-		}
+					}}
+					</tbody>
+				</table>
+			}}
+		</body>
 	}
 }
 

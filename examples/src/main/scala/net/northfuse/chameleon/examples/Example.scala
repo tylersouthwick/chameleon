@@ -79,5 +79,12 @@ object Example extends ChameleonServlet with HTMLView with JettyRunner {
 
 	val links = Seq(("Home1", home1), ("Home2", home2))
 
-	override def filters = Seq(ClarityTheme(links))
+	override def filters = super.filters ++ Seq(ClarityTheme(links))
+
+	override def notFound(identifier : String) = {
+		<body>
+			<p>Page Not Found</p>
+			<p>{link(homePage, "Return to home page")}</p>
+		</body>
+	}
 }
