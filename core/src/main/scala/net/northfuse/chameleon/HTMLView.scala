@@ -59,9 +59,15 @@ trait HTMLView {
 			filter(head, body)
 	}
 
+	trait RequestParser[T] {
+		def apply(request : Request) : T
+	}
+
 	implicit def convertXmlToView(nodes: => NodeSeq): ChameleonCallback = (request, response) => HTMLView(response)(filter(nodes))
 
 	implicit def convertXmlToView(nodes: Request => NodeSeq): ChameleonCallback = (request, response) => HTMLView(response)(filter(nodes(request)))
+
+	def parser[T] (nodes : T => NodeSeq) (implicit parser : RequestParser[T]) : ChameleonCallback = (request, response) => HTMLView(response)(filter(nodes(parser(request))))
 }
 
 object HTMLView {

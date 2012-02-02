@@ -1,7 +1,7 @@
 package net.northfuse.chameleon.examples
 
-import javax.servlet.http.{HttpServletRequest => Request}
 import net.northfuse.chameleon._
+import javax.servlet.http.{HttpServletRequest => Request}
 
 /**
  * @author tylers2
@@ -46,8 +46,30 @@ object Example extends ChameleonServlet with HTMLView with JettyRunner {
 	def home1 : ChameleonSession.ChameleonCallback = {
 		<body>
 			<div>home1</div>
+			{form(processAnswer, {
+				<input type="text" name="name" />
+				<input type="submit" value="Save" />
+			})}
 		</body>
 	}
+
+	trait FormAnswer {
+		def name : String
+	}
+
+	implicit object FormAnswer extends RequestParser[FormAnswer] {
+		def apply(request: Request) = new FormAnswer {
+			val name = request.getParameter("name")
+		}
+	}
+	
+	def processAnswer = parser((answer : FormAnswer) => {
+		<body>
+			<div>Answered Question!</div>
+			<p>Your name is {answer.name}</p>
+			{link(home1, "Return to home1")}
+		</body>
+	})
 
 	def home2 : ChameleonSession.ChameleonCallback = {
 		<body>
