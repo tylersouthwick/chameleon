@@ -2,6 +2,7 @@ package net.northfuse.chameleon
 
 import javax.servlet.http.{HttpSession => Session, HttpServletResponse => Response, HttpServletRequest => Request}
 import java.lang.ThreadLocal
+import java.math.BigInteger
 
 
 /**
@@ -43,7 +44,10 @@ class ChameleonSession(session: Session, request: Request) {
 		}
 	}
 
-	def newIdentifier = java.util.UUID.randomUUID().toString
+	def newIdentifier = {
+		val guid = java.util.UUID.randomUUID().toString.replaceAllLiterally("-", "")
+		new BigInteger(guid, 16).toString(36)
+	}
 
 	val currentIdentifier = {
 		val id = {
