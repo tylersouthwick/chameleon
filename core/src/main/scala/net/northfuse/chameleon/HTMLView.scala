@@ -1,12 +1,14 @@
 package net.northfuse.chameleon
 
 import javax.servlet.http.{HttpServletResponse => Response, HttpServletRequest => Request, HttpServlet}
-import xml.NodeSeq
+import io.Source
+import xml.{Elem, NodeSeq}
 
 /**
  * @author tylers2
  */
 trait HTMLView {
+
 	import ChameleonSession.ChameleonCallback
 
 	def url(callback: ChameleonCallback) = ChameleonSession(callback)
@@ -19,8 +21,47 @@ trait HTMLView {
 		{body}
 	</form>
 
-	implicit def convertXmlToView(nodes : => NodeSeq) : ChameleonCallback = (request, response) => HTMLView(response)(nodes)
-	implicit def convertXmlToView(nodes : Request => NodeSeq) : ChameleonCallback = (request, response) => HTMLView(response)(nodes(request))
+	/*
+	type CssDefinitions = Map[String, Seq[(String, String)]]
+	def css(definitions : CssDefinitions) = definitions.map{case (selector, styles) => {
+		<style>{selector + "{" + styles.foldLeft("") { (total, style) => total + style._1 + ": " + style._2 + ";" }}</style>
+	}}
+	*/
+	
+	def cssClassPath(name : String) : ChameleonCallback = {
+		val is = classOf[HTMLView].getResourceAsStream(name)
+		val s = Source.fromInputStream(is).mkString
+		(request, response) => {
+			response.getOutputStream.write(s.getBytes)
+		}
+	}
+
+	def css(file : String) = <link rel="stylesheet" href={file} type="text/css"/>
+	def css(css : ChameleonCallback) = <link rel="stylesheet" href={url(css)} type="text/css" />
+
+	type HTMLFilter = (NodeSeq,  NodeSeq) => NodeSeq
+
+	def filters = Seq[HTMLFilter]()
+
+	import xml._
+	import xml.NodeSeq._
+	implicit def addToNodeSeq(nodes : NodeSeq) = new {
+		def children = nodes match {
+			case e : Elem => e.child
+			case _ => NodeSeq.Empty
+		}
+	}
+	//todo improve this
+	def filter(nodes: NodeSeq) = filters.foldLeft(nodes) {
+		(nodes, filter) =>
+			val head = Seq[Node]()
+			val body = nodes.children
+			filter(head, body)
+	}
+
+	implicit def convertXmlToView(nodes: => NodeSeq): ChameleonCallback = (request, response) => HTMLView(response)(filter(nodes))
+
+	implicit def convertXmlToView(nodes: Request => NodeSeq): ChameleonCallback = (request, response) => HTMLView(response)(filter(nodes(request)))
 }
 
 object HTMLView {
