@@ -44,16 +44,15 @@ trait Application extends IdentifierHandler with HTMLView {
 		}
 	}
 
-	def notFound(identifier : String) = {
+	def notFound(identifier : String) : ChameleonCallback = "Page Not Found" -> {
 		<body>
 			<p>Page Not Found</p>
 			<p>{link(homePage, "Return to home page")}</p>
 		</body>
 	}
 
-	final def listSessions = {
+	final def listSessions : ChameleonCallback = "Open Sessions" -> {
 		<body>
-			<h1>Open Sessions</h1>
 			{
 			val list = Application.session.all
 			if (list.isEmpty) {
