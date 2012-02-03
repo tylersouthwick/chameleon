@@ -26,7 +26,7 @@ class ChameleonSession(identifierHandler : IdentifierHandler, session: Session, 
 		val m = session.getAttribute(sessionAttribute)
 
 		if (m == null) {
-			val newM = new DeltaQueueMap[String, ChameleonCallback](10)
+			val newM = new DeltaQueueMap[String, ChameleonCallback](1000)
 			session.setAttribute(sessionAttribute, newM)
 			newM
 		} else {
