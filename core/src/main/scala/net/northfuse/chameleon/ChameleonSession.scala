@@ -11,10 +11,15 @@ class ChameleonSession(identifierHandler : IdentifierHandler, session: Session, 
 
 	val sessionAttribute = "chameleonSession"
 
+	/**
+	 * Adds the callback to the session and returns a URL to access it.
+	 * @param callback The callback to execute
+	 * @return A URL
+	 */
 	def add(callback: ChameleonCallback) = {
 		val identifier = newIdentifier
 		addToSession(identifier, callback)
-		identifier
+		identifierHandler.buildUrl(identifier, request)
 	}
 
 	def map = lock {
