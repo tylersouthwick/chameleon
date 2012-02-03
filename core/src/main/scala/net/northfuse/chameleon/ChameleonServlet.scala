@@ -54,8 +54,8 @@ trait ChameleonServlet extends HttpServlet with Application {
 		}
 		if (!empty(servletPath)) {
 			sb.append(servletPath)
+			sb.append("/")
 		}
-		sb.append("/")
 		sb.append(identifier)
 		sb.toString()
 	}
