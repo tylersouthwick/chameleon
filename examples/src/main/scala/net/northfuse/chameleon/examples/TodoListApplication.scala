@@ -4,6 +4,7 @@ import net.northfuse.chameleon._
 import themes._
 import javax.servlet.http.{HttpServletRequest => Request}
 import collection.JavaConversions._
+import xml.{Text, Attribute, Null, Elem}
 
 /**
  * @author tylers2
@@ -16,7 +17,18 @@ object TodoListApplication extends ChameleonServlet with HTMLView with JettyRunn
 
 	val items = new java.util.LinkedList[Item]
 
-	def listItems : PageWithTitle = "Todo List" -> {
+	import Application.ChameleonCallback
+
+	def checkbox(onclick : ChameleonCallback, checked : Boolean) = {
+		val input = <input type="checkbox" onclick={"document.location='" + url(onclick) + "'"} />
+		if (checked) {
+			input % Attribute(None, "checked", Text("true"), Null)
+		} else {
+			input
+		}
+	}
+
+	def listItems : ChameleonCallback = "Todo List" -> {
 		<body>
 		{
 		if (items.isEmpty) {
@@ -27,12 +39,24 @@ object TodoListApplication extends ChameleonServlet with HTMLView with JettyRunn
 				<thead>
 					<tr>
 						<td>Item</td>
+						<td>Status</td>
 					</tr>
 				</thead>
 				<tbody>
 					{
 					items.map{item => 
-						<tr><td>{item.name}</td></tr>
+						<tr>
+							<td>{item.name}</td>
+							<td>
+								{checkbox(
+									onclick = (request, response) => {
+										item.finished = !item.finished
+										listItems(request, response)
+									},
+									checked = item.finished
+								)}
+							</td>
+						</tr>
 					}
 					}
 				</tbody>
@@ -48,13 +72,14 @@ object TodoListApplication extends ChameleonServlet with HTMLView with JettyRunn
 		<input type="submit" value="Add Item" />
 	})
 	
-	trait Item {
-		def name : String
+	class Item {
+		var name : String = null
+		var finished = false
 	}
 	
 	implicit object ItemParser extends RequestParser[Item] {
 		def apply(request: Request) = new Item {
-			val name = request.getParameter("itemName")
+			name = request.getParameter("itemName")
 		}
 	}
 	
