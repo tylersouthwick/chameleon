@@ -7,7 +7,7 @@ import org.junit.{Assert, Test}
  * @author tylers2
  */
 
-class HTMLViewTest {
+class HTMLApplicationTest {
 
 	import xml._
 	implicit def addToNodeSeq(nodes : NodeSeq) = new {
@@ -19,7 +19,7 @@ class HTMLViewTest {
 
 	@Test
 	def extractWithOnlyBody() {
-		val (head, body) = HTMLView.extractHeadAndBody({
+		val (head, body) = HTMLApplication.extractHeadAndBody({
 			<body>
 				<div>hello world!</div>
 			</body>
@@ -31,7 +31,7 @@ class HTMLViewTest {
 
 	@Test
 	def extractWithOnlyBodyContent() {
-		val (head, body) = HTMLView.extractHeadAndBody({
+		val (head, body) = HTMLApplication.extractHeadAndBody({
 			<div>hello world!</div>
 		})
 
@@ -41,7 +41,7 @@ class HTMLViewTest {
 
 	@Test
 	def extractWithHTML() {
-		val (head, body) = HTMLView.extractHeadAndBody({
+		val (head, body) = HTMLApplication.extractHeadAndBody({
 			<html>
 				<head>
 					<title>something</title>
@@ -58,7 +58,7 @@ class HTMLViewTest {
 
 	@Test
 	def multiLineExtractWithHTML() {
-		val (head, body) = HTMLView.extractHeadAndBody({
+		val (head, body) = HTMLApplication.extractHeadAndBody({
 			<html>
 				<head>
 					<title>something</title>

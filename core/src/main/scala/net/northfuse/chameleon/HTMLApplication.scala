@@ -7,11 +7,11 @@ import javax.servlet.http.{HttpServletRequestWrapper, HttpServletResponse => Res
 /**
  * @author tylers2
  */
-trait HTMLView {
+trait HTMLApplication {
 
 	import Application.ChameleonCallback
 
-	import HTMLView.LOG
+	import HTMLApplication.LOG
 
 	def url(callback: ChameleonCallback) = Application.url(callback)
 
@@ -62,7 +62,7 @@ trait HTMLView {
 	*/
 	
 	def staticFileClassPath(name : String) : ChameleonCallback = {
-		val is = classOf[HTMLView].getResourceAsStream(name)
+		val is = classOf[HTMLApplication].getResourceAsStream(name)
 		val s = Source.fromInputStream(is).mkString
 		(request, response) => {
 			response.getOutputStream.write(s.getBytes)
@@ -73,14 +73,14 @@ trait HTMLView {
 	def css(css : ChameleonCallback) = <link rel="stylesheet" href={url(css)} type="text/css" />
 	def js(js : ChameleonCallback) = <script type="text/javascript" src={url(js)}></script>
 
-	import HTMLView.HTMLFilter
+	import HTMLApplication.HTMLFilter
 	def filters = Seq[HTMLFilter](JQueryFilter)
 
 	def filter(nodes: NodeSeq) = {
 		LOG.debug("applying filters")
 		filters.foldLeft(nodes) {
 			(nodes, filter) =>
-				val (head, body) = HTMLView.extractHeadAndBody(nodes)
+				val (head, body) = HTMLApplication.extractHeadAndBody(nodes)
 				filter(head, body)
 		}
 	}
@@ -101,31 +101,31 @@ trait HTMLView {
 	implicit def convertXmlToView(nodes:  => NodeSeq): ChameleonCallback = {
 		LOG.debug("converting xml to view")
 		(request, response) => {
-			LOG.debug("calling HTMLView")
-			HTMLView(response)(filter(nodes))
+			LOG.debug("calling HTMLApplication")
+			HTMLApplication(response)(filter(nodes))
 		}
 	}
 
 	implicit def convertPageWithTitleToView(nodes:  => PageWithTitle) = convertXmlToView(nodes)
 
 	implicit def convertXmlRequestToView(nodes: (Request) => NodeSeq): ChameleonCallback = (request, response) => {
-		LOG.debug("calling HTMLView")
-		HTMLView(response)(filter(nodes(request)))
+		LOG.debug("calling HTMLApplication")
+		HTMLApplication(response)(filter(nodes(request)))
 	}
 
 	def parser[T] (nodes : T => NodeSeq) (implicit parser : RequestParser[T]) : ChameleonCallback = (request, response) => {
-		LOG.debug("calling HTMLView")
-		HTMLView(response)(filter(nodes(parser(request))))
+		LOG.debug("calling HTMLApplication")
+		HTMLApplication(response)(filter(nodes(parser(request))))
 	}
 
 	def parser2[T] (nodes : T => PageWithTitle) (implicit parser : RequestParser[T]) : ChameleonCallback = (request, response) => {
-		LOG.debug("calling HTMLView")
-		HTMLView(response)(filter(nodes(parser(request))))
+		LOG.debug("calling HTMLApplication")
+		HTMLApplication(response)(filter(nodes(parser(request))))
 	}
 }
 
-object HTMLView {
-	private val LOG = org.slf4j.LoggerFactory.getLogger(classOf[HTMLView])
+object HTMLApplication {
+	private val LOG = org.slf4j.LoggerFactory.getLogger(classOf[HTMLApplication])
 
 	type HTMLFilter = (NodeSeq,  NodeSeq) => NodeSeq
 	

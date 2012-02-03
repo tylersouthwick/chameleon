@@ -9,7 +9,7 @@ import xml.{Text, Attribute, Null, Elem}
 /**
  * @author tylers2
  */
-object TodoListApplication extends ChameleonServlet with HTMLView with JettyRunner {
+object TodoListApplication extends ChameleonServlet with HTMLApplication with JettyRunner {
 
 	private val LOG = org.slf4j.LoggerFactory.getLogger("net.northfuse.chameleon.examples.TodoListApplication")
 

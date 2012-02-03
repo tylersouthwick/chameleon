@@ -1,12 +1,12 @@
 package net.northfuse.chameleon
 
-import HTMLView.HTMLFilter
+import HTMLApplication.HTMLFilter
 import xml.NodeSeq
 
 /**
  * @author Tyler Southwick
  */
-object JQueryFilter extends HTMLFilter with HTMLView {
+object JQueryFilter extends HTMLFilter with HTMLApplication {
 	def apply(head: NodeSeq, body: NodeSeq) = {
 		<html>
 			<head>

@@ -5,7 +5,7 @@ import javax.servlet.http.{HttpServletResponse => Response, HttpServletRequest =
 /**
  * @author tylers2
  */
-trait Application extends IdentifierHandler with HTMLView {
+trait Application extends IdentifierHandler with HTMLApplication {
 
 	import Application.ChameleonCallback
 

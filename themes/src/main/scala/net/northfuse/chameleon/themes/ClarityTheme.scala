@@ -1,14 +1,14 @@
 package net.northfuse.chameleon.themes
 
-import net.northfuse.chameleon.{Application, HTMLView}
+import net.northfuse.chameleon.{Application, HTMLApplication}
 import xml.NodeSeq
 
-import HTMLView.HTMLFilter
+import HTMLApplication.HTMLFilter
 
 /**
  * @author Tyler Southwick
  */
-object ClarityTheme extends HTMLView {
+object ClarityTheme extends HTMLApplication {
 
 	val LOG = org.slf4j.LoggerFactory.getLogger("net.northfuse.chameleon.examples.ClarityTheme")
 
