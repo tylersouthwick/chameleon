@@ -1,6 +1,7 @@
 package net.northfuse.chameleon.examples
 
 import net.northfuse.chameleon._
+import forms.Form
 import themes._
 import javax.servlet.http.{HttpServletRequest => Request}
 import collection.JavaConversions._
@@ -65,10 +66,10 @@ object TodoListApplication extends ChameleonServlet with HTMLApplication with Je
 		</body>
 	}
 	
-	def addItem = "Add Item" -> form (saveItem, {
+	def addItem = "Add Item" -> Form(saveItem) {
 		<input name="itemName" />
 		<input type="submit" value="Add Item" />
-	})
+	}
 	
 	class Item {
 		var name : String = null
