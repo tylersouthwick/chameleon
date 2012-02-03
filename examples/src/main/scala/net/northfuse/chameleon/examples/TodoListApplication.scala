@@ -19,8 +19,13 @@ object TodoListApplication extends ChameleonServlet with HTMLView with JettyRunn
 
 	import Application.ChameleonCallback
 
-	def checkbox(onclick : ChameleonCallback, checked : Boolean) = {
-		val input = <input type="checkbox" onclick={"document.location='" + url(onclick) + "'"} />
+	def ajax(callback : => Unit) = {
+		val ajaxUrl = url( (request, response) => callback)
+		"jQuery.ajax('" + ajaxUrl + "')"
+	}
+
+	def checkbox(onclick : => Unit, checked : Boolean) = {
+		val input = <input type="checkbox" onclick={ajax(onclick)} />
 		if (checked) {
 			input % Attribute(None, "checked", Text("true"), Null)
 		} else {
@@ -49,9 +54,8 @@ object TodoListApplication extends ChameleonServlet with HTMLView with JettyRunn
 							<td>{item.name}</td>
 							<td>
 								{checkbox(
-									onclick = (request, response) => {
+									onclick = {
 										item.finished = !item.finished
-										listItems(request, response)
 									},
 									checked = item.finished
 								)}

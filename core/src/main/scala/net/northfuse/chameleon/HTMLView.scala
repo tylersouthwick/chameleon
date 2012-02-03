@@ -61,7 +61,7 @@ trait HTMLView {
 	}}
 	*/
 	
-	def cssClassPath(name : String) : ChameleonCallback = {
+	def staticFileClassPath(name : String) : ChameleonCallback = {
 		val is = classOf[HTMLView].getResourceAsStream(name)
 		val s = Source.fromInputStream(is).mkString
 		(request, response) => {
@@ -71,10 +71,10 @@ trait HTMLView {
 
 	def css(file : String) = <link rel="stylesheet" href={file} type="text/css"/>
 	def css(css : ChameleonCallback) = <link rel="stylesheet" href={url(css)} type="text/css" />
+	def js(js : ChameleonCallback) = <script type="text/javascript" src={url(js)}></script>
 
-	type HTMLFilter = (NodeSeq,  NodeSeq) => NodeSeq
-
-	def filters = Seq[HTMLFilter]()
+	import HTMLView.HTMLFilter
+	def filters = Seq[HTMLFilter](JQueryFilter)
 
 	def filter(nodes: NodeSeq) = {
 		LOG.debug("applying filters")
@@ -126,6 +126,8 @@ trait HTMLView {
 
 object HTMLView {
 	private val LOG = org.slf4j.LoggerFactory.getLogger(classOf[HTMLView])
+
+	type HTMLFilter = (NodeSeq,  NodeSeq) => NodeSeq
 	
 	def apply(response: Response)(body: => NodeSeq) {
 		LOG.debug("applying HTML View")

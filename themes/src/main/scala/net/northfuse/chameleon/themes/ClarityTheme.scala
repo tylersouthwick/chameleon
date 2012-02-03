@@ -3,6 +3,7 @@ package net.northfuse.chameleon.themes
 import net.northfuse.chameleon.{Application, HTMLView}
 import xml.NodeSeq
 
+import HTMLView.HTMLFilter
 
 /**
  * @author Tyler Southwick
@@ -21,7 +22,8 @@ object ClarityTheme extends HTMLView {
 		<html>
 			<head>
 				<title>{pageTitle}</title>
-				{css(myStyles)}{head}
+				{css(myStyles)}
+				{head}
 			</head>
 			<body>
 				<div id="header">
@@ -57,5 +59,5 @@ object ClarityTheme extends HTMLView {
 		</html>
 	}
 
-	val myStyles = cssClassPath("/styles/clarity.css")
+	val myStyles = staticFileClassPath("/styles/clarity.css")
 }
