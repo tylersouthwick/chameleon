@@ -66,6 +66,6 @@
 	</build>
 
 	<properties>
-		<mainClass>net.northfuse.chameleon.examples.Example</mainClass>
+		<mainClass>net.northfuse.chameleon.examples.TodoListApplication</mainClass>
 	</properties>
 </project>
