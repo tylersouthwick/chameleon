@@ -100,6 +100,11 @@ object TodoListApplication extends ChameleonServlet with HTMLView with JettyRunn
 
 	def theme = clarityTheme
 
+	override def mappings = Map(
+		"items" -> listItems,
+		"newItem" -> addItem
+	)
+
 	override def filters = super.filters ++ Seq(theme)
 
 }

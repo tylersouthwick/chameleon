@@ -10,13 +10,29 @@ trait Application extends IdentifierHandler with HTMLView {
 	import Application.ChameleonCallback
 
 	def handle(request : Request, response : Response) {
-		Application(this, request, response, homePage(request, response), {
-			case infe: IdentifierNotFoundException => handleNotFound(infe.identifier, request, response)
-			case t : Throwable => handleError(t)(request, response)
-		})
+		Application(
+			identifierHandler = this,
+			request = request,
+			response = response,
+			start = homePage(request, response),
+			mappings = mappings,
+			errorHandler = {
+				case infe: IdentifierNotFoundException => handleNotFound(infe.identifier, request, response)
+				case t : Throwable => handleError(t)(request, response)
+			}
+		)
+	}
+	
+	def findPermanentMapping(request : Request) = {
+		findIdentifier(request) match {
+			case Some(identifier) => mappings.get(identifier)
+			case None => None
+		}
 	}
 
 	def homePage: ChameleonCallback
+
+	def mappings = Map[String,  ChameleonCallback]()
 
 	def handleError(t : Throwable) = {
 		<body>
@@ -103,8 +119,11 @@ object Application {
 
 	def url(callback: ChameleonCallback) = session.add(callback)
 
-	def apply(identifierHandler : IdentifierHandler, request: Request, response: Response, start: => Unit, errorHandle: PartialFunction[Throwable, Unit]) {
-		val session = new ChameleonSession(identifierHandler, request.getSession, request)
+	def apply(identifierHandler : IdentifierHandler, request: Request, response: Response,
+	          start: => Unit,
+	          errorHandler: PartialFunction[Throwable, Unit],
+			  mappings : Map[String,  ChameleonCallback]) {
+		val session = new ChameleonSession(identifierHandler, request.getSession, request, mappings)
 		holder.set(session)
 		try {
 			session.current match {
@@ -117,7 +136,7 @@ object Application {
 					callback(request, response)
 				}
 			}
-		} catch errorHandle
+		} catch errorHandler
 		finally {
 			holder.remove()
 		}

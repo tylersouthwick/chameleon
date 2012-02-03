@@ -1,16 +1,14 @@
 package net.northfuse.chameleon
 
-import javax.servlet.http.{HttpSession => Session, HttpServletResponse => Response, HttpServletRequest => Request}
-import java.lang.ThreadLocal
+import javax.servlet.http.{HttpSession => Session, HttpServletRequest => Request}
 import java.math.BigInteger
-
+import Application.ChameleonCallback
 
 /**
  * @author tylers2
  */
-class ChameleonSession(identifierHandler : IdentifierHandler, session: Session, request: Request) {
+class ChameleonSession(identifierHandler : IdentifierHandler, session: Session, request: Request, mappings : Map[String,  ChameleonCallback]) {
 
-	import Application.ChameleonCallback
 	val sessionAttribute = "chameleonSession"
 
 	def add(callback: ChameleonCallback) = {
@@ -53,7 +51,12 @@ class ChameleonSession(identifierHandler : IdentifierHandler, session: Session, 
 
 	def current = currentIdentifier match {
 		case None => None
-		case Some(identifier) => Some((identifier, getFromSession(identifier)))
+		case Some(identifier) => {
+			mappings.get(identifier) match {
+				case Some(callback) => Some((identifier, callback))
+				case None => Some((identifier, getFromSession(identifier)))
+			}
+		}
 	}
 
 	def all = lock {map.keysWithTimeout}
