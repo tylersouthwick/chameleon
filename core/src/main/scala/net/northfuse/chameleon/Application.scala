@@ -22,7 +22,7 @@ trait Application extends IdentifierHandler with HTMLApplication {
 			}
 		)
 	}
-	
+
 	def findPermanentMapping(request : Request) = {
 		findIdentifier(request) match {
 			case Some(identifier) => mappings.get(identifier)
@@ -100,12 +100,6 @@ trait Application extends IdentifierHandler with HTMLApplication {
 			}}
 		</body>
 	}
-}
-
-trait IdentifierHandler {
-	def findIdentifier(request : Request) : Option[String]
-
-	def buildUrl(identifier : String, request : Request) : String
 }
 
 object Application {

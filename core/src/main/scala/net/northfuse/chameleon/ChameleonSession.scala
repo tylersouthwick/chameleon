@@ -74,3 +74,10 @@ class ChameleonSession(identifierHandler : IdentifierHandler, session: Session, 
 }
 
 class IdentifierNotFoundException(val identifier: String) extends RuntimeException(identifier + " not found")
+
+trait IdentifierHandler {
+	def findIdentifier(request : Request) : Option[String]
+
+	def buildUrl(identifier : String, request : Request) : String
+}
+
