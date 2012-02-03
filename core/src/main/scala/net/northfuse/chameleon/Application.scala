@@ -113,6 +113,11 @@ object Application {
 
 	def url(callback: ChameleonCallback) = session.add(callback)
 
+	def ajax(callback : => Unit) = {
+		val ajaxUrl = url( (request, response) => callback)
+		"jQuery.ajax('" + ajaxUrl + "')"
+	}
+
 	def apply(identifierHandler : IdentifierHandler, request: Request, response: Response,
 	          start: => Unit,
 	          errorHandler: PartialFunction[Throwable, Unit],

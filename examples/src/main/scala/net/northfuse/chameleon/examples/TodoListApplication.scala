@@ -4,7 +4,6 @@ import net.northfuse.chameleon._
 import themes._
 import javax.servlet.http.{HttpServletRequest => Request}
 import collection.JavaConversions._
-import xml.{Text, Attribute, Null, Elem}
 
 /**
  * @author tylers2
@@ -18,20 +17,7 @@ object TodoListApplication extends ChameleonServlet with HTMLApplication with Je
 	val items = new java.util.LinkedList[Item]
 
 	import Application.ChameleonCallback
-
-	def ajax(callback : => Unit) = {
-		val ajaxUrl = url( (request, response) => callback)
-		"jQuery.ajax('" + ajaxUrl + "')"
-	}
-
-	def checkbox(onclick : => Unit, checked : Boolean) = {
-		val input = <input type="checkbox" onclick={ajax(onclick)} />
-		if (checked) {
-			input % Attribute(None, "checked", Text("true"), Null)
-		} else {
-			input
-		}
-	}
+	import HTMLForm._
 
 	def listItems : ChameleonCallback = "Todo List" -> {
 		<body>
