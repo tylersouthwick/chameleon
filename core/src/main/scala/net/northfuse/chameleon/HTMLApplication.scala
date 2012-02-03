@@ -13,9 +13,9 @@ trait HTMLApplication {
 
 	import HTMLApplication.LOG
 
-	def url(callback: ChameleonCallback) = Application.url(callback)
+	final def url(callback: ChameleonCallback) = Application.url(callback)
 
-	def link(callback: ChameleonCallback, body: String) = <a href={url(callback)}>
+	final def link(callback: ChameleonCallback, body: String) = <a href={url(callback)}>
 		{body}
 	</a>
 
@@ -24,7 +24,7 @@ trait HTMLApplication {
 	 * @param callback The callback that needs to get handled.
 	 * @return A url to the wrapped callback
 	 */
-	def formAction(callback : ChameleonCallback) = url((request, response) => {
+	private def formAction(callback : ChameleonCallback) = url((request, response) => {
 		val parameters = request.getParameterMap.asInstanceOf[java.util.Map[String, Array[String]]]
 		response.sendRedirect(url((request, response) =>
 				callback(new HttpServletRequestWrapper(request) {
@@ -45,12 +45,13 @@ trait HTMLApplication {
 
 	/**
 	 * Builds a form with the specified action.
+	 * Follows the POST-REDIRECT-GET pattern so that the user will never get a warning to resubmit a form.
 	 *
 	 * @param action The action to preform on submition
 	 * @param body The form body
 	 * @return The xhtml of the form
 	 */
-	def form(action: ChameleonCallback, body: NodeSeq) = <form action={formAction(action)} method="POST">
+	final def form(action: ChameleonCallback, body: NodeSeq) = <form action={formAction(action)} method="POST">
 		{body}
 	</form>
 
@@ -61,7 +62,7 @@ trait HTMLApplication {
 	}}
 	*/
 	
-	def staticFileClassPath(name : String) : ChameleonCallback = {
+	final def staticFileClassPath(name : String) : ChameleonCallback = {
 		val is = classOf[HTMLApplication].getResourceAsStream(name)
 		val s = Source.fromInputStream(is).mkString
 		(request, response) => {
@@ -69,14 +70,13 @@ trait HTMLApplication {
 		}
 	}
 
-	def css(file : String) = <link rel="stylesheet" href={file} type="text/css"/>
-	def css(css : ChameleonCallback) = <link rel="stylesheet" href={url(css)} type="text/css" />
-	def js(js : ChameleonCallback) = <script type="text/javascript" src={url(js)}></script>
+	final def css(css : ChameleonCallback) = <link rel="stylesheet" href={url(css)} type="text/css" />
+	final def js(js : ChameleonCallback) = <script type="text/javascript" src={url(js)}></script>
 
 	import HTMLApplication.HTMLFilter
 	def filters = Seq[HTMLFilter](JQueryFilter)
 
-	def filter(nodes: NodeSeq) = {
+	final private def filter(nodes: NodeSeq) = {
 		LOG.debug("applying filters")
 		filters.foldLeft(nodes) {
 			(nodes, filter) =>
@@ -91,14 +91,14 @@ trait HTMLApplication {
 
 	type PageWithTitle = (String, NodeSeq)
 
-	implicit def convertPageWithTitle(page : PageWithTitle) = <html>
+	implicit final def convertPageWithTitle(page : PageWithTitle) = <html>
 		<head>
 			<title>{page._1}</title>
 		</head>
 		<body>{page._2}</body>
 	</html>
 
-	implicit def convertXmlToView(nodes:  => NodeSeq): ChameleonCallback = {
+	implicit final def convertXmlToView(nodes:  => NodeSeq): ChameleonCallback = {
 		LOG.debug("converting xml to view")
 		(request, response) => {
 			LOG.debug("calling HTMLApplication")
@@ -106,19 +106,19 @@ trait HTMLApplication {
 		}
 	}
 
-	implicit def convertPageWithTitleToView(nodes:  => PageWithTitle) = convertXmlToView(nodes)
+	implicit final def convertPageWithTitleToView(nodes:  => PageWithTitle) = convertXmlToView(nodes)
 
-	implicit def convertXmlRequestToView(nodes: (Request) => NodeSeq): ChameleonCallback = (request, response) => {
+	implicit final def convertXmlRequestToView(nodes: (Request) => NodeSeq): ChameleonCallback = (request, response) => {
 		LOG.debug("calling HTMLApplication")
 		HTMLApplication(response)(filter(nodes(request)))
 	}
 
-	def parser[T] (nodes : T => NodeSeq) (implicit parser : RequestParser[T]) : ChameleonCallback = (request, response) => {
+	final def parser[T] (nodes : T => NodeSeq) (implicit parser : RequestParser[T]) : ChameleonCallback = (request, response) => {
 		LOG.debug("calling HTMLApplication")
 		HTMLApplication(response)(filter(nodes(parser(request))))
 	}
 
-	def parser2[T] (nodes : T => PageWithTitle) (implicit parser : RequestParser[T]) : ChameleonCallback = (request, response) => {
+	final def parser2[T] (nodes : T => PageWithTitle) (implicit parser : RequestParser[T]) : ChameleonCallback = (request, response) => {
 		LOG.debug("calling HTMLApplication")
 		HTMLApplication(response)(filter(nodes(parser(request))))
 	}
@@ -136,7 +136,7 @@ object HTMLApplication {
 		out.println(body)
 	}
 	
-	implicit def findNodeSeqChildren(nodes : Seq[Node]) = new {
+	implicit private def findNodeSeqChildren(nodes : Seq[Node]) = new {
 		val children = nodes match {
 			case e : Elem => e.child
 			case _ => if (nodes.isEmpty) {
