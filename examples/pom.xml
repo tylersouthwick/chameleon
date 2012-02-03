@@ -11,9 +11,9 @@
 
 	<artifactId>chameleon-examples</artifactId>
 	<packaging>jar</packaging>
-	<name>Chameleon Web Framework</name>
+	<name>Chameleon Examples</name>
 	<description>
-		Web Framework using continuations
+		Examples of Chameleon
 	</description>
 
 	<dependencies>

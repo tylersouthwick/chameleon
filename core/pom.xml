@@ -11,9 +11,9 @@
 
 	<artifactId>chameleon-core</artifactId>
 	<packaging>jar</packaging>
-	<name>Chameleon Examples</name>
+	<name>Chameleon Core</name>
 	<description>
-		Chameleon Examples
+		Chameleon Core
 	</description>
 
 	<dependencies>
