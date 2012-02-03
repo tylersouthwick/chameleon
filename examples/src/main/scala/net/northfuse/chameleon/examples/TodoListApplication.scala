@@ -38,8 +38,8 @@ object TodoListApplication extends ChameleonServlet with HTMLView with JettyRunn
 			<table>
 				<thead>
 					<tr>
-						<td>Item</td>
-						<td>Status</td>
+						<th>Item</th>
+						<th>Status</th>
 					</tr>
 				</thead>
 				<tbody>
