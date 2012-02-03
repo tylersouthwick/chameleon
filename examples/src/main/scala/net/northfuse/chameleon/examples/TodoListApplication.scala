@@ -37,10 +37,18 @@ object TodoListApplication extends ChameleonServlet with HTMLApplication with Je
 					{
 					items.map{item => 
 						<tr>
-							<td>{item.name}</td>
+							<td>{
+								textbox.onchange(
+									callback = { newName =>
+										println("updateing name from [" + item.name + "] -> [" + newName + "]")
+										item.name = newName
+									},
+									value = item.name
+								)}
+							</td>
 							<td>
-								{checkbox(
-									onclick = {
+								{checkbox.onclick(
+									callback = { status =>
 										item.finished = !item.finished
 									},
 									checked = item.finished

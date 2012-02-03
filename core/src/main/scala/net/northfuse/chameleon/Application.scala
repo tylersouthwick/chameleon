@@ -113,9 +113,14 @@ object Application {
 
 	def url(callback: ChameleonCallback) = session.add(callback)
 
-	def ajax(callback : => Unit) = {
-		val ajaxUrl = url( (request, response) => callback)
+	def ajax(callback : ChameleonCallback) = {
+		val ajaxUrl = url(callback)
 		"jQuery.ajax('" + ajaxUrl + "')"
+	}
+	
+	def ajax(name : String, id : String,  callback : String => Unit) = {
+		val ajaxUrl = url((request, response) => callback(request.getParameter(name)))
+		"jQuery.ajax({url: '" + ajaxUrl + "', data: {'" + name + "': jQuery('#" + id + "').val()}})"
 	}
 
 	def apply(identifierHandler : IdentifierHandler, request: Request, response: Response,
