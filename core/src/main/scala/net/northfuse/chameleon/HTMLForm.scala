@@ -43,7 +43,7 @@ trait FormElement {
 		import Application.ajax
 		def eventType : String
 		def randomString = java.util.UUID.randomUUID().toString
-		def apply(callback : String => Unit, name : Opt[String] = None, id : Opt[String] = None, checked : Boolean = false, value : Opt[String] = None) = {
+		def apply(callback : String => Map[String, NodeSeq], name : Opt[String] = None, id : Opt[String] = None, checked : Boolean = false, value : Opt[String] = None) = {
 			val actualName = (name : Option[String]) match {
 				case Some(givenName) => givenName
 				case None => randomString

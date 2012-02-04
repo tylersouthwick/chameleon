@@ -27,9 +27,10 @@ trait HTMLApplication {
 	*/
 	
 	final def staticFileClassPath(name : String) : ChameleonCallback = {
-		val is = classOf[HTMLApplication].getResourceAsStream(name)
-		val s = Source.fromInputStream(is).mkString
 		(request, response) => {
+			println("rendering file: " + name)
+			val is = classOf[HTMLApplication].getResourceAsStream(name)
+			val s = Source.fromInputStream(is).mkString
 			response.getOutputStream.write(s.getBytes)
 		}
 	}

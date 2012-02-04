@@ -1,6 +1,7 @@
 package net.northfuse.chameleon
 
 import javax.servlet.http.{HttpServletResponse => Response, HttpServletRequest => Request}
+import xml.NodeSeq
 
 /**
  * @author tylers2
@@ -118,9 +119,22 @@ object Application {
 		"jQuery.ajax('" + ajaxUrl + "')"
 	}
 	
-	def ajax(name : String, id : String,  callback : String => Unit) = {
-		val ajaxUrl = url((request, response) => callback(request.getParameter(name)))
-		"jQuery.ajax({url: '" + ajaxUrl + "', data: {'" + name + "': jQuery('#" + id + "').val()}})"
+	def convertToJson(data : Map[String, NodeSeq]) = "{" + data.map{case (id, nodes) =>
+		"\"" + id + "\"" + ": \"" + nodes.toString().replaceAllLiterally ("\"", "\\\"").replaceAllLiterally("\n", "").replaceAllLiterally("\t", "") + "\""
+	}.mkString(",") + "}"
+
+	def ajax(name : String, id : String,  callback : String => Map[String, NodeSeq]) = {
+		val ajaxUrl = url((request, response) => {
+			val divsToUpdate = callback(request.getParameter(name))
+			val json = convertToJson(divsToUpdate);
+			/*
+			val jsonpCallback = request.getParameter("callback")
+			val jsonp = jsonpCallback + "(" + json + ");"
+			*/
+			response.setHeader("Content-Type", "application/json")
+			response.getOutputStream.write(json.getBytes);
+		})
+		"updateDivsFromAjax('" + name + "', '" + id + "', '" + ajaxUrl + "')"
 	}
 
 	def apply(identifierHandler : IdentifierHandler, request: Request, response: Response,

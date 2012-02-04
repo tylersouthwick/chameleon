@@ -11,6 +11,7 @@ object JQueryFilter extends HTMLFilter with HTMLApplication {
 		<html>
 			<head>
 				{js(jQueryJs)}
+				{js(ajax)}
 				{head}
 			</head>
 			<body>
@@ -20,4 +21,5 @@ object JQueryFilter extends HTMLFilter with HTMLApplication {
 	}
 
 	val jQueryJs = staticFileClassPath("/chameleon/js/jquery-1.7.1.min.js")
+	val ajax = staticFileClassPath("/chameleon/js/ajax.js")
 }

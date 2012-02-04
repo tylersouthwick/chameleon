@@ -5,6 +5,7 @@ import forms.Form
 import themes._
 import javax.servlet.http.{HttpServletRequest => Request}
 import collection.JavaConversions._
+import xml.NodeSeq
 
 /**
  * @author tylers2
@@ -20,13 +21,18 @@ object TodoListApplication extends ChameleonServlet with HTMLApplication with Je
 	import Application.ChameleonCallback
 	import HTMLForm._
 
+	def itemCountPanel = <div id="itemCountPanel">
+		<p>You have {items.filter(_.finished).size} finished items and {items.filter(!_.finished).size} not finished!</p>
+		</div>
+
 	def listItems : ChameleonCallback = "Todo List" -> {
 		<body>
 		{
 		if (items.isEmpty) {
 			<p>You have no items</p>
 		} else {
-			<p>You have {items.size} items</p>
+			<div>
+			{itemCountPanel}
 			<table>
 				<thead>
 					<tr>
@@ -43,6 +49,7 @@ object TodoListApplication extends ChameleonServlet with HTMLApplication with Je
 									callback = { newName =>
 										println("updateing name from [" + item.name + "] -> [" + newName + "]")
 										item.name = newName
+										Map()
 									},
 									value = item.name
 								)}
@@ -51,6 +58,9 @@ object TodoListApplication extends ChameleonServlet with HTMLApplication with Je
 								{checkbox.onclick(
 									callback = { status =>
 										item.finished = !item.finished
+										Map (
+											"itemCountPanel" -> itemCountPanel
+										)
 									},
 									checked = item.finished
 								)}
@@ -60,6 +70,7 @@ object TodoListApplication extends ChameleonServlet with HTMLApplication with Je
 					}
 				</tbody>
 			</table>
+				</div>
 		}
 		}
 		<p>You can {link(callback = addItem, body ="add")} some items</p>
