@@ -10,7 +10,7 @@ updateDivsFromAjax = (function ($) {
             },
             success: function (data) {
                 $.each(data, function (id, html) {
-                    $("#" + id).html(html);
+                    $("#" + id).html($(html).children());
                 });
             },
             url: ajaxUrl,
