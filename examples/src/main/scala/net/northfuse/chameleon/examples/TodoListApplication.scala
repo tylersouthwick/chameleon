@@ -23,7 +23,7 @@ object TodoListApplication extends ChameleonServlet with HTMLApplication with Je
 
 	def itemCountPanel = <div id="itemCountPanel">
 		<p>You have {items.filter(_.finished).size} finished items and {items.filter(!_.finished).size} not finished!</p>
-		</div>
+	</div>
 
 	def listItems : ChameleonCallback = "Todo List" -> {
 		<body>
