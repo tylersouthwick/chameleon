@@ -1,6 +1,7 @@
 package net.northfuse.chameleon.examples
 
 import net.northfuse.chameleon._
+import HTMLApplication._
 import forms.Form
 import themes._
 import javax.servlet.http.{HttpServletRequest => Request}
@@ -25,7 +26,7 @@ object TodoListApplication extends ChameleonServlet with HTMLApplication with Je
 		<p>You have {items.filter(_.finished).size} finished items and {items.filter(!_.finished).size} not finished!</p>
 	</div>
 
-	def listItems : ChameleonCallback = "Todo List" -> {
+	def listItems : ChameleonCallback = page("Todo List") {
 		<body>
 		{
 		if (items.isEmpty) {
@@ -77,10 +78,10 @@ object TodoListApplication extends ChameleonServlet with HTMLApplication with Je
 		</body>
 	}
 	
-	def addItem = "Add Item" -> Form(saveItem) {
+	def addItem = page("Add Item") {Form(saveItem) {
 		<input name="itemName" />
 		<input type="submit" value="Add Item" />
-	}
+	}}
 	
 	class Item {
 		var name : String = null
@@ -93,11 +94,11 @@ object TodoListApplication extends ChameleonServlet with HTMLApplication with Je
 		}
 	}
 	
-	def saveItem = parser2((item : Item) => "Item Saved" -> {
+	def saveItem : ChameleonCallback = formHandler ("Item Saved") {(item : Item) => {
 		items.add(item)
 		<p>Item Saved!</p>
 		<p>{link(callback = listItems, body = "Return to List")}</p>
-	})
+	}}
 	
 	val clarityTheme = ClarityTheme(
 		title = "Todo List Application",

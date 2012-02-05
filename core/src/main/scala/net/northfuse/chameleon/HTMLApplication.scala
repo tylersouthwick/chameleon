@@ -9,15 +9,10 @@ import javax.servlet.http.{HttpServletResponse => Response, HttpServletRequest =
  */
 trait HTMLApplication {
 
+	import HTMLApplication._
 	import Application.ChameleonCallback
 
 	import HTMLApplication.LOG
-
-	final def url(callback: ChameleonCallback) = Application.url(callback)
-
-	final def link(callback: ChameleonCallback, body: String) = <a href={url(callback)}>
-		{body}
-	</a>
 
 	/*
 	type CssDefinitions = Map[String, Seq[(String, String)]]
@@ -56,34 +51,18 @@ trait HTMLApplication {
 
 	type PageWithTitle = (String, NodeSeq)
 
-	implicit final def convertPageWithTitle(page : PageWithTitle) = <html>
-		<head>
-			<title>{page._1}</title>
-		</head>
-		<body>{page._2}</body>
-	</html>
-
-	implicit final def convertXmlToView(nodes:  => NodeSeq): ChameleonCallback = {
-		LOG.debug("converting xml to view")
-		(request, response) => {
-			LOG.debug("calling HTMLApplication")
-			HTMLApplication(response)(filter(nodes))
-		}
+	final def page(title : String)(body: => NodeSeq) : ChameleonCallback = (request, response) => {
+		HTMLApplication(response) (filter {
+			<html>
+				<head>
+					<title>{title}</title>
+				</head>
+				{body}
+			</html>
+		})
 	}
 
-	implicit final def convertPageWithTitleToView(nodes:  => PageWithTitle) = convertXmlToView(nodes)
-
-	implicit final def convertXmlRequestToView(nodes: (Request) => NodeSeq): ChameleonCallback = (request, response) => {
-		LOG.debug("calling HTMLApplication")
-		HTMLApplication(response)(filter(nodes(request)))
-	}
-
-	final def parser[T] (nodes : T => NodeSeq) (implicit parser : RequestParser[T]) : ChameleonCallback = (request, response) => {
-		LOG.debug("calling HTMLApplication")
-		HTMLApplication(response)(filter(nodes(parser(request))))
-	}
-
-	final def parser2[T] (nodes : T => PageWithTitle) (implicit parser : RequestParser[T]) : ChameleonCallback = (request, response) => {
+	final def formHandler[T] (title : String) (nodes : T => NodeSeq) (implicit parser : RequestParser[T]) : ChameleonCallback = (request, response) => {
 		LOG.debug("calling HTMLApplication")
 		HTMLApplication(response)(filter(nodes(parser(request))))
 	}
@@ -138,5 +117,13 @@ object HTMLApplication {
 		case _ => (NodeSeq.Empty, nodes)
 	}
 	*/
+
+	import Application.ChameleonCallback
+	
+	def url(callback: ChameleonCallback) = Application.url(callback)
+
+	def link(callback: ChameleonCallback, body: String) = <a href={url(callback)}>
+		{body}
+	</a>
 }
 

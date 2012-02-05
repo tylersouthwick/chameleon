@@ -9,6 +9,7 @@ import xml.NodeSeq
 trait Application extends IdentifierHandler with HTMLApplication {
 
 	import Application.ChameleonCallback
+	import HTMLApplication._
 
 	def handle(request : Request, response : Response) {
 		Application(
@@ -35,7 +36,7 @@ trait Application extends IdentifierHandler with HTMLApplication {
 
 	def mappings = Map[String,  ChameleonCallback]()
 
-	def handleError(t : Throwable) = {
+	def handleError(t : Throwable) = page("Unexpected Error") {
 		<body>
 			<h1>There was an error!</h1>
 			{t.getMessage}
@@ -61,14 +62,14 @@ trait Application extends IdentifierHandler with HTMLApplication {
 		}
 	}
 
-	def notFound(identifier : String) : ChameleonCallback = "Page Not Found" -> {
+	def notFound(identifier : String) = page("Page Not Found") {
 		<body>
 			<p>Page Not Found</p>
 			<p>{link(homePage, "Return to home page")}</p>
 		</body>
 	}
 
-	final def listSessions : ChameleonCallback = "Open Sessions" -> {
+	final def listSessions = page("Open Sessions") {
 		<body>
 			{
 			val list = Application.session.all
@@ -119,6 +120,8 @@ object Application {
 		"jQuery.ajax('" + ajaxUrl + "')"
 	}
 	
+	implicit def convertNodeSeqToTuple(nodes : NodeSeq) = (nodes \ "@id").text -> nodes
+
 	def convertToJson(data : Map[String, NodeSeq]) = "{" + data.map{case (id, nodes) =>
 		"\"" + id + "\"" + ": \"" + nodes.toString().replaceAllLiterally ("\"", "\\\"").replaceAllLiterally("\n", "").replaceAllLiterally("\t", "") + "\""
 	}.mkString(",") + "}"

@@ -19,11 +19,13 @@ trait SpringServlet extends Servlet {
 }
 
 object SpringServlet {
+	private val LOG = org.slf4j.LoggerFactory.getLogger(classOf[SpringServlet])
 	private var applicationContext : ApplicationContext = null
 
 	private def context_=(servletContext : ServletContext) {
+		LOG.info("Initializing Application Context [" + servletContext.getServletContextName + "]")
 		applicationContext = WebApplicationContextUtils.getRequiredWebApplicationContext(servletContext)
 	}
 
-	def findBean[T](klass : Class[T]) = SpringServlet.applicationContext.getBean(klass)
+	def findBean[T](klass : Class[T]) = applicationContext.getBean(klass)
 }

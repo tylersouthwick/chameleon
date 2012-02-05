@@ -3,7 +3,7 @@ package net.northfuse.chameleon.themes
 import net.northfuse.chameleon.{Application, HTMLApplication}
 import xml.NodeSeq
 
-import HTMLApplication.HTMLFilter
+import HTMLApplication._
 
 /**
  * @author Tyler Southwick
