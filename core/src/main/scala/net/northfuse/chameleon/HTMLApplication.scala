@@ -64,7 +64,16 @@ trait HTMLApplication {
 
 	final def formHandler[T] (title : String) (nodes : T => NodeSeq) (implicit parser : RequestParser[T]) : ChameleonCallback = (request, response) => {
 		LOG.debug("calling HTMLApplication")
-		HTMLApplication(response)(filter(nodes(parser(request))))
+		HTMLApplication(response)(filter{
+			<html>
+				<head>
+					<title>{title}</title>
+				</head>
+				<body>
+					{nodes(parser(request))}
+				</body>
+			</html>
+		})
 	}
 }
 
