@@ -3,6 +3,7 @@ package net.northfuse.chameleon
 import javax.servlet.http.{HttpSession => Session, HttpServletRequest => Request}
 import java.math.BigInteger
 import Application.ChameleonCallback
+import io.Source
 
 /**
  * @author tylers2
@@ -21,6 +22,8 @@ class ChameleonSession(identifierHandler : IdentifierHandler, session: Session, 
 		addToSession(identifier, callback)
 		identifierHandler.buildUrl(identifier, request)
 	}
+
+	def buildUrl(url : String) = identifierHandler.buildUrl(url, request)
 
 	def map = lock {
 		val m = session.getAttribute(sessionAttribute)
@@ -59,7 +62,28 @@ class ChameleonSession(identifierHandler : IdentifierHandler, session: Session, 
 		case Some(identifier) => {
 			mappings.get(identifier) match {
 				case Some(callback) => Some((identifier, callback))
-				case None => Some((identifier, getFromSession(identifier)))
+				case None => {
+					//is it a static resource?
+					if (identifier.startsWith("static/")) {
+						val callback :ChameleonCallback = (request, response) => {
+							println("identifier: " + identifier)
+							val resource = identifier
+							println("resource: " + resource)
+							val realPath = "/net/northfuse/chameleon/" + resource
+							println("realPath: " + realPath)
+							val is = classOf[HTMLApplication].getResourceAsStream(realPath)
+							if (is == null) {
+								throw new IdentifierNotFoundException(identifier)
+							} else {
+								val s =  Source.fromInputStream(is).mkString
+								response.getOutputStream.write(s.getBytes)
+							}
+						}
+						Some(identifier, callback)
+					} else {
+						Some((identifier, getFromSession(identifier)))
+					}
+				}
 			}
 		}
 	}

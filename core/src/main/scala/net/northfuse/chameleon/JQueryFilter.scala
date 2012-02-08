@@ -20,6 +20,6 @@ object JQueryFilter extends HTMLFilter with HTMLApplication {
 		</html>
 	}
 
-	val jQueryJs = staticFileClassPath("/chameleon/js/jquery-1.7.1.min.js")
-	val ajax = staticFileClassPath("/chameleon/js/ajax.js")
+	val jQueryJs = staticFileClassPath("js/jquery-1.7.1.min.js")
+	val ajax = staticFileClassPath("js/ajax.js")
 }

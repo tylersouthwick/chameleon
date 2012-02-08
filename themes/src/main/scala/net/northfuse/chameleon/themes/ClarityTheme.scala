@@ -16,6 +16,7 @@ object ClarityTheme extends HTMLApplication {
 
 	type ClarityLinks = Seq[(String, ChameleonCallback)]
 	def apply(title : String, links: ClarityLinks, footer : => NodeSeq = NodeSeq.Empty): HTMLFilter = (head, body) => {
+		val myStyles = staticFileClassPath("/styles/clarity.css")
 		LOG.debug("Applying Theme")
 		//find title
 		val pageTitle = (head \\ "title").text
@@ -58,6 +59,4 @@ object ClarityTheme extends HTMLApplication {
 			</body>
 		</html>
 	}
-
-	val myStyles = staticFileClassPath("/styles/clarity.css")
 }

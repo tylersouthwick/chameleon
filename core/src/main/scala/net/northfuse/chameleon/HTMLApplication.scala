@@ -1,6 +1,5 @@
 package net.northfuse.chameleon
 
-import io.Source
 import xml._
 import javax.servlet.http.{HttpServletResponse => Response, HttpServletRequest => Request}
 
@@ -21,7 +20,8 @@ trait HTMLApplication {
 	}}
 	*/
 	
-	final def staticFileClassPath(name : String) : ChameleonCallback = {
+	final def staticFileClassPath(name : String) = Application.session.buildUrl("static/" + name)
+	/*
 		(request, response) => {
 			println("rendering file: " + name)
 			val is = classOf[HTMLApplication].getResourceAsStream(name)
@@ -29,9 +29,12 @@ trait HTMLApplication {
 			response.getOutputStream.write(s.getBytes)
 		}
 	}
+	*/
 
-	final def css(css : ChameleonCallback) = <link rel="stylesheet" href={url(css)} type="text/css" />
-	final def js(js : ChameleonCallback) = <script type="text/javascript" src={url(js)}></script>
+	final def css(css : String) : Elem = <link rel="stylesheet" href={css} type="text/css" />
+	final def css(cssCallback : ChameleonCallback) : Elem = css(url(cssCallback))
+	final def js(js : String) : Elem = <script type="text/javascript" src={js}></script>
+	final def js(jsCallback : ChameleonCallback) : Elem = js(url(jsCallback))
 
 	import HTMLApplication.HTMLFilter
 	def filters = Seq[HTMLFilter](JQueryFilter)
