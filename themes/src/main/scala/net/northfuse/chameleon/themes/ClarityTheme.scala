@@ -16,15 +16,19 @@ object ClarityTheme extends HTMLApplication {
 
 	type ClarityLinks = Seq[(String, ChameleonCallback)]
 	def apply(title : String, links: ClarityLinks, footer : => NodeSeq = NodeSeq.Empty): HTMLFilter = (head, body) => {
-		val myStyles = staticFileClassPath("/styles/clarity.css")
+		val myStyles = staticFileClassPath("styles/clarity.css")
+		val jQueryUICSS = staticFileClassPath("css/start/jquery-ui-1.8.17.custom.css")
+		val jQueryUI = staticFileClassPath("js/jquery-ui-1.8.17.custom.min.js")
 		LOG.debug("Applying Theme")
 		//find title
 		val pageTitle = (head \\ "title").text
 		<html>
 			<head>
 				<title>{pageTitle}</title>
-				{css(myStyles)}
 				{head}
+				{css(myStyles)}
+				{css(jQueryUICSS)}
+				{js(jQueryUI)}
 			</head>
 			<body>
 				<div id="header">

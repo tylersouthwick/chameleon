@@ -3,13 +3,13 @@ package net.northfuse.chameleon
 import javax.servlet.http.{HttpSession => Session, HttpServletRequest => Request}
 import java.math.BigInteger
 import Application.ChameleonCallback
-import io.Source
 
 /**
  * @author tylers2
  */
 class ChameleonSession(identifierHandler : IdentifierHandler, session: Session, request: Request, mappings : Map[String,  ChameleonCallback]) {
 
+	import ChameleonSession.LOG
 	val sessionAttribute = "chameleonSession"
 
 	/**
@@ -66,17 +66,17 @@ class ChameleonSession(identifierHandler : IdentifierHandler, session: Session, 
 					//is it a static resource?
 					if (identifier.startsWith("static/")) {
 						val callback :ChameleonCallback = (request, response) => {
-							println("identifier: " + identifier)
+							LOG.trace("identifier: " + identifier)
 							val resource = identifier
-							println("resource: " + resource)
+							LOG.trace("resource: " + resource)
 							val realPath = "/net/northfuse/chameleon/" + resource
-							println("realPath: " + realPath)
+							LOG.trace("realPath: " + realPath)
 							val is = classOf[HTMLApplication].getResourceAsStream(realPath)
 							if (is == null) {
+								LOG.trace("identifier not found")
 								throw new IdentifierNotFoundException(identifier)
 							} else {
-								val s =  Source.fromInputStream(is).mkString
-								response.getOutputStream.write(s.getBytes)
+								org.apache.commons.io.IOUtils.copy(is, response.getOutputStream)
 							}
 						}
 						Some(identifier, callback)
@@ -95,6 +95,10 @@ class ChameleonSession(identifierHandler : IdentifierHandler, session: Session, 
 			callback
 		}
 	}
+}
+
+object ChameleonSession {
+	val LOG = org.slf4j.LoggerFactory.getLogger(classOf[ChameleonSession])
 }
 
 class IdentifierNotFoundException(val identifier: String) extends RuntimeException(identifier + " not found")

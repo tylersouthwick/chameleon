@@ -6,7 +6,8 @@ import forms.Form
 import themes._
 import javax.servlet.http.{HttpServletRequest => Request}
 import collection.JavaConversions._
-import xml.NodeSeq
+import jQueryUI.AlertBlock
+import xml.{Elem, NodeSeq}
 
 /**
  * @author tylers2
@@ -26,8 +27,11 @@ object TodoListApplication extends ChameleonServlet with HTMLApplication with Je
 		<p>You have {items.filter(_.finished).size} finished items and {items.filter(!_.finished).size} not finished!</p>
 	</div>
 
+	def notices(body : NodeSeq) = "itemNotices" -> <div id="itemNotices">{body}</div>
+
 	def listItems : ChameleonCallback = page("Todo List") {
 		<body>
+			{notices(NodeSeq.Empty)._2}
 		{
 		if (items.isEmpty) {
 			<p>You have no items</p>
@@ -50,7 +54,9 @@ object TodoListApplication extends ChameleonServlet with HTMLApplication with Je
 									callback = { newName =>
 										println("updateing name from [" + item.name + "] -> [" + newName + "]")
 										item.name = newName
-										Map()
+										Map(
+											notices(AlertBlock("Updated name"))
+										)
 									},
 									value = item.name
 								)}
@@ -60,6 +66,7 @@ object TodoListApplication extends ChameleonServlet with HTMLApplication with Je
 									callback = { status =>
 										item.finished = !item.finished
 										Map (
+											notices(AlertBlock("You finished something!")),
 											"itemCountPanel" -> itemCountPanel
 										)
 									},
@@ -78,10 +85,14 @@ object TodoListApplication extends ChameleonServlet with HTMLApplication with Je
 		</body>
 	}
 	
-	def addItem = page("Add Item") {Form(saveItem) {
-		<input name="itemName" />
-		<input type="submit" value="Add Item" />
-	}}
+	def addItem = page("Add Item") {
+		<body>
+			{Form(saveItem) {
+			<input name="itemName" />
+			<input type="submit" value="Add Item" />
+			}}
+		</body>
+	}
 	
 	class Item {
 		var name : String = null
