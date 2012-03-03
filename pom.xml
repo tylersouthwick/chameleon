@@ -159,6 +159,7 @@
 								</configuration>
 								<reports>
 									<report>dependencies</report>
+									<report>index</report>
 									<report>scm</report>
 								</reports>
 							</plugin>
@@ -188,7 +189,7 @@
                         <dependency>
                             <groupId>org.kathrynhuxtable.maven.wagon</groupId>
                             <artifactId>wagon-gitsite</artifactId>
-                            <version>0.3.1</version>
+                            <version>0.4-SNAPSHOT</version>
                         </dependency>
                     </dependencies>
 				</plugin>
