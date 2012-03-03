@@ -14,7 +14,7 @@
 	<version>0.1.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>Chameleon Framework</name>
-	<url>http://northfuse.net</url>
+	<url>http://northfuse.net/chameleon</url>
 	<description>
 		Web Framework using continuations
 	</description>
@@ -44,15 +44,12 @@
 		<url>https://bitbucket.org/tylersouthwick/chameleon/issues</url>
 	</issueManagement>
 
-	<!--
 	<distributionManagement>
 		<site>
-			<id>site.website</id>
-			<name>cf2js</name>
-			<url>scp://northfuse.net/data/sites/cf2js</url>
+			<id>site.github</id>
+			<url>gitsite:git@github.com/tylersouthwick/chameleon.git</url>
 		</site>
 	</distributionManagement>
-	-->
 
 	<developers>
 		<developer>
@@ -172,6 +169,28 @@
 							</plugin>
 						</reportPlugins>
 					</configuration>
+                    <dependencies>
+                        <dependency>
+                            <groupId>org.apache.maven.wagon</groupId>
+                            <artifactId>wagon-scm</artifactId>
+                            <version>2.2</version>
+                        </dependency>
+                        <dependency>
+                            <groupId>org.apache.maven.scm</groupId>
+                            <artifactId>maven-scm-manager-plexus</artifactId>
+                            <version>1.5</version>
+                        </dependency>
+                        <dependency>
+                            <groupId>org.apache.maven.scm</groupId>
+                            <artifactId>maven-scm-provider-gitexe</artifactId>
+                            <version>1.5</version>
+                        </dependency>
+                        <dependency>
+                            <groupId>org.kathrynhuxtable.maven.wagon</groupId>
+                            <artifactId>wagon-gitsite</artifactId>
+                            <version>0.3.1</version>
+                        </dependency>
+                    </dependencies>
 				</plugin>
 			</plugins>
 		</pluginManagement>
