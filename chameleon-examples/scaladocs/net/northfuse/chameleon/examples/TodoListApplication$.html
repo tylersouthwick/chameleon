@@ -69,6 +69,17 @@
       </span>
       </h4>
       
+    </li><li visbl="pub" name="net.northfuse.chameleon.examples.TodoListApplication.ItemFormAction" data-isabs="true">
+      <a id="ItemFormAction:ItemFormAction"></a>
+      <h4 class="signature">
+      <span class="kind">trait</span>
+      <span class="symbol"> 
+        <a href="TodoListApplication$$ItemFormAction.html"><span class="name">ItemFormAction</span></a>
+        
+        <span class="result"> extends FormAction[Item]</span>
+      </span>
+      </h4>
+      
     </li><li visbl="pub" name="net.northfuse.chameleon.HTMLApplication#PageWithTitle" data-isabs="false">
       <a id="PageWithTitle:()"></a>
       <h4 class="signature">
@@ -80,17 +91,6 @@
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>HTMLApplication</dd></dl></div>
-    </li><li visbl="pub" name="net.northfuse.chameleon.examples.TodoListApplication#test" data-isabs="false">
-      <a id="test:test"></a>
-      <h4 class="signature">
-      <span class="kind">type</span>
-      <span class="symbol"> 
-        <span class="name">test</span>
-        
-        <span class="result"> = AnyRef { def hello: String }</span>
-      </span>
-      </h4>
-      
     </li></ol>
             </div>
         
@@ -153,17 +153,17 @@
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>final </dd><dt>Definition Classes</dt><dd>Any</dd></dl></div>
-    </li><li visbl="pub" name="net.northfuse.chameleon.examples.TodoListApplication.ItemParser" data-isabs="false">
-      <a id="ItemParser:ItemParser"></a>
+    </li><li visbl="pub" name="net.northfuse.chameleon.examples.TodoListApplication.AddItemForm" data-isabs="false">
+      <a id="AddItemForm:AddItemForm"></a>
       <h4 class="signature">
       <span class="kind">object</span>
       <span class="symbol"> 
-        <a href="TodoListApplication$$ItemParser$.html"><span class="name">ItemParser</span></a>
+        <a href="TodoListApplication$$AddItemForm$.html"><span class="name">AddItemForm</span></a>
         
-        <span class="result"> extends RequestParser[Item]</span>
+        <span class="result"> extends Form[Item]</span>
       </span>
       </h4>
-      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>implicit </dd></dl></div>
+      
     </li><li visbl="pub" name="net.northfuse.chameleon.examples.TodoListApplication#addItem" data-isabs="false">
       <a id="addItem:ChameleonCallback"></a>
       <h4 class="signature">
@@ -426,17 +426,6 @@
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Application</dd></dl></div>
-    </li><li visbl="pub" name="net.northfuse.chameleon.HTMLApplication#formHandler" data-isabs="false">
-      <a id="formHandler[T](String)((T) ⇒ NodeSeq)(RequestParser[T]):ChameleonCallback"></a>
-      <h4 class="signature">
-      <span class="kind">def</span>
-      <span class="symbol"> 
-        <span class="name">formHandler</span>
-        <span class="tparams">[<span name="T">T</span>]</span>
-        <span class="params">(<span name="title">title: String</span>)</span><span class="params">(<span name="nodes">nodes: (T) ⇒ <span name="scala.xml.NodeSeq" class="extype">NodeSeq</span></span>)</span><span class="params">(<span class="implicit">implicit </span><span name="parser">parser: <span name="net.northfuse.chameleon.HTMLApplication.RequestParser" class="extype">RequestParser</span>[T]</span>)</span><span class="result">: ChameleonCallback</span>
-      </span>
-      </h4>
-      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>final </dd><dt>Definition Classes</dt><dd>HTMLApplication</dd></dl></div>
     </li><li visbl="pub" name="scala.AnyRef#getClass" data-isabs="false">
       <a id="getClass():java.lang.Class[_]"></a>
       <h4 class="signature">
@@ -774,13 +763,13 @@
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>final </dd><dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
     </li><li visbl="pub" name="net.northfuse.chameleon.HTMLApplication#page" data-isabs="false">
-      <a id="page(String)(⇒ NodeSeq):ChameleonCallback"></a>
+      <a id="page(String)(⇒ Elem):ChameleonCallback"></a>
       <h4 class="signature">
       <span class="kind">def</span>
       <span class="symbol"> 
         <span class="name">page</span>
         
-        <span class="params">(<span name="title">title: String</span>)</span><span class="params">(<span name="body">body: ⇒ <span name="scala.xml.NodeSeq" class="extype">NodeSeq</span></span>)</span><span class="result">: ChameleonCallback</span>
+        <span class="params">(<span name="title">title: String</span>)</span><span class="params">(<span name="body">body: ⇒ <span name="scala.xml.Elem" class="extype">Elem</span></span>)</span><span class="result">: ChameleonCallback</span>
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>final </dd><dt>Definition Classes</dt><dd>HTMLApplication</dd></dl></div>
@@ -795,14 +784,14 @@
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected </dd></dl></div>
-    </li><li visbl="pub" name="net.northfuse.chameleon.examples.TodoListApplication#saveItem" data-isabs="false">
-      <a id="saveItem:ChameleonCallback"></a>
+    </li><li visbl="pub" name="net.northfuse.chameleon.examples.TodoListApplication.saveItem" data-isabs="false">
+      <a id="saveItem:saveItem"></a>
       <h4 class="signature">
-      <span class="kind">def</span>
+      <span class="kind">object</span>
       <span class="symbol"> 
-        <span class="name">saveItem</span>
+        <a href="TodoListApplication$$saveItem$.html"><span class="name">saveItem</span></a>
         
-        <span class="result">: ChameleonCallback</span>
+        <span class="result"> extends ItemFormAction</span>
       </span>
       </h4>
       
