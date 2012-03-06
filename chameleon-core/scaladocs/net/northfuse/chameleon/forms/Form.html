@@ -2,38 +2,35 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 <html>
         <head>
-          <title>net.northfuse.chameleon.Application</title>
+          <title>net.northfuse.chameleon.forms.Form</title>
           <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
           
-      <link type="text/css" media="screen" rel="stylesheet" href="../../../lib/template.css" />
-      <script type="text/javascript" src="../../../lib/jquery.js"></script>
-      <script type="text/javascript" src="../../../lib/jquery-ui.js"></script>
-      <script type="text/javascript" src="../../../lib/template.js"></script>
-      <script type="text/javascript" src="../../../lib/tools.tooltip.js"></script>
+      <link type="text/css" media="screen" rel="stylesheet" href="../../../../lib/template.css" />
+      <script type="text/javascript" src="../../../../lib/jquery.js"></script>
+      <script type="text/javascript" src="../../../../lib/jquery-ui.js"></script>
+      <script type="text/javascript" src="../../../../lib/template.js"></script>
+      <script type="text/javascript" src="../../../../lib/tools.tooltip.js"></script>
     
         </head>
         <body class="type">
       <div id="definition">
-        <a title="Go to companion" href="Application$.html"><img src="../../../lib/trait_to_object_big.png" /></a>
-        <p id="owner"><a name="net" class="extype" href="../../package.html">net</a>.<a name="net.northfuse" class="extype" href="../package.html">northfuse</a>.<a name="net.northfuse.chameleon" class="extype" href="package.html">chameleon</a></p>
-        <h1><a title="Go to companion" href="Application$.html">Application</a></h1>
+        <a title="Go to companion" href="Form$.html"><img src="../../../../lib/trait_to_object_big.png" /></a>
+        <p id="owner"><a name="net" class="extype" href="../../../package.html">net</a>.<a name="net.northfuse" class="extype" href="../../package.html">northfuse</a>.<a name="net.northfuse.chameleon" class="extype" href="../package.html">chameleon</a>.<a name="net.northfuse.chameleon.forms" class="extype" href="package.html">forms</a></p>
+        <h1><a title="Go to companion" href="Form$.html">Form</a></h1>
       </div>
 
       <h4 class="signature" id="signature">
       <span class="kind">trait</span>
       <span class="symbol"> 
-        <span class="name">Application</span>
-        
-        <span class="result"> extends <a name="net.northfuse.chameleon.IdentifierHandler" class="extype" href="IdentifierHandler.html">IdentifierHandler</a> with <a name="net.northfuse.chameleon.HTMLApplication" class="extype" href="HTMLApplication.html">HTMLApplication</a></span>
+        <span class="name">Form</span>
+        <span class="tparams">[<span name="T">T</span>]</span>
+        <span class="result"> extends AnyRef</span>
       </span>
       </h4>
       
-          <div class="fullcommenttop" id="comment"><div class="comment cmt"></div><div class="toggleContainer block">
+          <div class="fullcommenttop" id="comment"><div class="comment cmt"><p>Follows the POST-REDIRECT-GET pattern so that the user will never get a warning to resubmit a form.</p></div><div class="toggleContainer block">
           <span class="toggle">Linear Supertypes</span>
-          <div class="superTypes hiddenContent"><a name="net.northfuse.chameleon.HTMLApplication" class="extype" href="HTMLApplication.html">HTMLApplication</a>, <a name="net.northfuse.chameleon.IdentifierHandler" class="extype" href="IdentifierHandler.html">IdentifierHandler</a>, AnyRef, <span name="scala.Any" class="extype">Any</span></div>
-        </div><div class="toggleContainer block">
-          <span class="toggle">Known Subclasses</span>
-          <div class="subClasses hiddenContent"><a name="net.northfuse.chameleon.ChameleonServlet" class="extype" href="ChameleonServlet.html">ChameleonServlet</a></div>
+          <div class="superTypes hiddenContent">AnyRef, <span name="scala.Any" class="extype">Any</span></div>
         </div></div>
         
 
@@ -49,7 +46,7 @@
                 <span class="filtertype">Inherited</span>
                 <ol><li class="hideall out"><span>Hide All</span></li>
                 <li class="showall in"><span>Show all</span></li></ol>
-                <ol id="linearization"><li name="net.northfuse.chameleon.Application" class="in"><span>Application</span></li><li name="net.northfuse.chameleon.HTMLApplication" class="in"><span>HTMLApplication</span></li><li name="net.northfuse.chameleon.IdentifierHandler" class="in"><span>IdentifierHandler</span></li><li name="scala.AnyRef" class="in"><span>AnyRef</span></li><li name="scala.Any" class="in"><span>Any</span></li></ol>
+                <ol id="linearization"><li name="net.northfuse.chameleon.forms.Form" class="in"><span>Form</span></li><li name="scala.AnyRef" class="in"><span>AnyRef</span></li><li name="scala.Any" class="in"><span>Any</span></li></ol>
               </div>
           <div id="visbl">
               <span class="filtertype">Visibility</span>
@@ -59,54 +56,29 @@
 
         
 
-        <div class="types members" id="types">
-              <h3>Type Members</h3>
-              <ol><li visbl="pub" name="net.northfuse.chameleon.HTMLApplication#PageWithTitle" data-isabs="false">
-      <a id="PageWithTitle:()"></a>
-      <h4 class="signature">
-      <span class="kind">type</span>
-      <span class="symbol"> 
-        <span class="name">PageWithTitle</span>
         
-        <span class="result"> = (String, <span name="scala.xml.NodeSeq" class="extype">NodeSeq</span>)</span>
-      </span>
-      </h4>
-      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a name="net.northfuse.chameleon.HTMLApplication" class="extype" href="HTMLApplication.html">HTMLApplication</a></dd></dl></div>
-    </li></ol>
-            </div>
         
         <div class="values members" id="values">
               <h3>Abstract Value Members</h3>
-              <ol><li visbl="pub" name="net.northfuse.chameleon.IdentifierHandler#buildUrl" data-isabs="true">
-      <a id="buildUrl(String,HttpServletRequest):String"></a>
+              <ol><li visbl="pub" name="net.northfuse.chameleon.forms.Form#actions" data-isabs="true">
+      <a id="actions:Seq[FormAction[T]]"></a>
       <h4 class="signature">
       <span class="kind">def</span>
       <span class="symbol"> 
-        <span class="name">buildUrl</span>
+        <span class="name">actions</span>
         
-        <span class="params">(<span name="identifier">identifier: String</span>, <span name="request">request: <span name="javax.servlet.http.HttpServletRequest" class="extype">HttpServletRequest</span></span>)</span><span class="result">: String</span>
+        <span class="result">: Seq[<a name="net.northfuse.chameleon.forms.FormAction" class="extype" href="FormAction.html">FormAction</a>[T]]</span>
       </span>
       </h4>
-      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>abstract </dd><dt>Definition Classes</dt><dd><a name="net.northfuse.chameleon.IdentifierHandler" class="extype" href="IdentifierHandler.html">IdentifierHandler</a></dd></dl></div>
-    </li><li visbl="pub" name="net.northfuse.chameleon.IdentifierHandler#findIdentifier" data-isabs="true">
-      <a id="findIdentifier(HttpServletRequest):Option[String]"></a>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>abstract </dd></dl></div>
+    </li><li visbl="pub" name="net.northfuse.chameleon.forms.Form#apply" data-isabs="true">
+      <a id="apply(HttpServletRequest):T"></a>
       <h4 class="signature">
       <span class="kind">def</span>
       <span class="symbol"> 
-        <span class="name">findIdentifier</span>
+        <span class="name">apply</span>
         
-        <span class="params">(<span name="request">request: <span name="javax.servlet.http.HttpServletRequest" class="extype">HttpServletRequest</span></span>)</span><span class="result">: <span name="scala.Option" class="extype">Option</span>[String]</span>
-      </span>
-      </h4>
-      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>abstract </dd><dt>Definition Classes</dt><dd><a name="net.northfuse.chameleon.IdentifierHandler" class="extype" href="IdentifierHandler.html">IdentifierHandler</a></dd></dl></div>
-    </li><li visbl="pub" name="net.northfuse.chameleon.Application#homePage" data-isabs="true">
-      <a id="homePage:ChameleonCallback"></a>
-      <h4 class="signature">
-      <span class="kind">def</span>
-      <span class="symbol"> 
-        <span class="name">homePage</span>
-        
-        <span class="result">: ChameleonCallback</span>
+        <span class="params">(<span name="request">request: <span name="javax.servlet.http.HttpServletRequest" class="extype">HttpServletRequest</span></span>)</span><span class="result">: T</span>
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>abstract </dd></dl></div>
@@ -170,6 +142,20 @@
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>final </dd><dt>Definition Classes</dt><dd>Any</dd></dl></div>
+    </li><li visbl="pub" name="net.northfuse.chameleon.forms.Form#apply" data-isabs="false">
+      <a id="apply(NodeSeq):Elem"></a>
+      <h4 class="signature">
+      <span class="kind">def</span>
+      <span class="symbol"> 
+        <span class="name">apply</span>
+        
+        <span class="params">(<span name="body">body: <span name="scala.xml.NodeSeq" class="extype">NodeSeq</span></span>)</span><span class="result">: <span name="scala.xml.Elem" class="extype">Elem</span></span>
+      </span>
+      </h4>
+      <p class="shortcomment cmt">Builds a form with the specified action.</p><div class="fullcomment"><div class="comment cmt"><p>Builds a form with the specified action.
+Follows the POST-REDIRECT-GET pattern so that the user will never get a warning to resubmit a form.
+</p></div><dl class="paramcmts block"><dt class="param">body</dt><dd class="cmt"><p>The form body</p></dd><dt>returns</dt><dd class="cmt"><p>The xhtml of the form
+</p></dd></dl><dl class="attributes block"> <dt>Attributes</dt><dd>final </dd></dl></div>
     </li><li visbl="pub" name="scala.Any#asInstanceOf" data-isabs="false">
       <a id="asInstanceOf[T0]:T0"></a>
       <h4 class="signature">
@@ -191,32 +177,10 @@
         <span class="params">()</span><span class="result">: AnyRef</span>
       </span>
       </h4>
-      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected[<a name="java.lang" class="extype" href="../../../java/lang/package.html">lang</a>] </dd><dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected[<a name="java.lang" class="extype" href="../../../../java/lang/package.html">lang</a>] </dd><dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
                 <span class="name">@throws</span><span class="args">()</span>
               
         </dd></dl></div>
-    </li><li visbl="pub" name="net.northfuse.chameleon.HTMLApplication#css" data-isabs="false">
-      <a id="css(ChameleonCallback):Elem"></a>
-      <h4 class="signature">
-      <span class="kind">def</span>
-      <span class="symbol"> 
-        <span class="name">css</span>
-        
-        <span class="params">(<span name="cssCallback">cssCallback: ChameleonCallback</span>)</span><span class="result">: <span name="scala.xml.Elem" class="extype">Elem</span></span>
-      </span>
-      </h4>
-      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>final </dd><dt>Definition Classes</dt><dd><a name="net.northfuse.chameleon.HTMLApplication" class="extype" href="HTMLApplication.html">HTMLApplication</a></dd></dl></div>
-    </li><li visbl="pub" name="net.northfuse.chameleon.HTMLApplication#css" data-isabs="false">
-      <a id="css(String):Elem"></a>
-      <h4 class="signature">
-      <span class="kind">def</span>
-      <span class="symbol"> 
-        <span class="name">css</span>
-        
-        <span class="params">(<span name="css">css: String</span>)</span><span class="result">: <span name="scala.xml.Elem" class="extype">Elem</span></span>
-      </span>
-      </h4>
-      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>final </dd><dt>Definition Classes</dt><dd><a name="net.northfuse.chameleon.HTMLApplication" class="extype" href="HTMLApplication.html">HTMLApplication</a></dd></dl></div>
     </li><li visbl="pub" name="scala.AnyRef#eq" data-isabs="false">
       <a id="eq(AnyRef):Boolean"></a>
       <h4 class="signature">
@@ -239,17 +203,6 @@
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
-    </li><li visbl="pub" name="net.northfuse.chameleon.HTMLApplication#filters" data-isabs="false">
-      <a id="filters:Seq[HTMLFilter]"></a>
-      <h4 class="signature">
-      <span class="kind">def</span>
-      <span class="symbol"> 
-        <span class="name">filters</span>
-        
-        <span class="result">: <span name="scala.collection.Seq" class="extype">Seq</span>[HTMLFilter]</span>
-      </span>
-      </h4>
-      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a name="net.northfuse.chameleon.HTMLApplication" class="extype" href="HTMLApplication.html">HTMLApplication</a></dd></dl></div>
     </li><li visbl="prt" name="scala.AnyRef#finalize" data-isabs="false">
       <a id="finalize():Unit"></a>
       <h4 class="signature">
@@ -260,21 +213,10 @@
         <span class="params">()</span><span class="result">: <span name="scala.Unit" class="extype">Unit</span></span>
       </span>
       </h4>
-      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected[<a name="java.lang" class="extype" href="../../../java/lang/package.html">lang</a>] </dd><dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected[<a name="java.lang" class="extype" href="../../../../java/lang/package.html">lang</a>] </dd><dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
                 <span class="name">@throws</span><span class="args">()</span>
               
         </dd></dl></div>
-    </li><li visbl="pub" name="net.northfuse.chameleon.Application#findPermanentMapping" data-isabs="false">
-      <a id="findPermanentMapping(HttpServletRequest):Option[ChameleonCallback]"></a>
-      <h4 class="signature">
-      <span class="kind">def</span>
-      <span class="symbol"> 
-        <span class="name">findPermanentMapping</span>
-        
-        <span class="params">(<span name="request">request: <span name="javax.servlet.http.HttpServletRequest" class="extype">HttpServletRequest</span></span>)</span><span class="result">: <span name="scala.Option" class="extype">Option</span>[ChameleonCallback]</span>
-      </span>
-      </h4>
-      
     </li><li visbl="pub" name="scala.AnyRef#getClass" data-isabs="false">
       <a id="getClass():java.lang.Class[_]"></a>
       <h4 class="signature">
@@ -286,28 +228,6 @@
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>final </dd><dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
-    </li><li visbl="pub" name="net.northfuse.chameleon.Application#handle" data-isabs="false">
-      <a id="handle(HttpServletRequest,HttpServletResponse):Unit"></a>
-      <h4 class="signature">
-      <span class="kind">def</span>
-      <span class="symbol"> 
-        <span class="name">handle</span>
-        
-        <span class="params">(<span name="request">request: <span name="javax.servlet.http.HttpServletRequest" class="extype">HttpServletRequest</span></span>, <span name="response">response: <span name="javax.servlet.http.HttpServletResponse" class="extype">HttpServletResponse</span></span>)</span><span class="result">: <span name="scala.Unit" class="extype">Unit</span></span>
-      </span>
-      </h4>
-      
-    </li><li visbl="pub" name="net.northfuse.chameleon.Application#handleError" data-isabs="false">
-      <a id="handleError(Throwable):ChameleonCallback"></a>
-      <h4 class="signature">
-      <span class="kind">def</span>
-      <span class="symbol"> 
-        <span class="name">handleError</span>
-        
-        <span class="params">(<span name="t">t: Throwable</span>)</span><span class="result">: ChameleonCallback</span>
-      </span>
-      </h4>
-      
     </li><li visbl="pub" name="scala.AnyRef#hashCode" data-isabs="false">
       <a id="hashCode():Int"></a>
       <h4 class="signature">
@@ -330,50 +250,6 @@
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>final </dd><dt>Definition Classes</dt><dd>Any</dd></dl></div>
-    </li><li visbl="pub" name="net.northfuse.chameleon.HTMLApplication#js" data-isabs="false">
-      <a id="js(ChameleonCallback):Elem"></a>
-      <h4 class="signature">
-      <span class="kind">def</span>
-      <span class="symbol"> 
-        <span class="name">js</span>
-        
-        <span class="params">(<span name="jsCallback">jsCallback: ChameleonCallback</span>)</span><span class="result">: <span name="scala.xml.Elem" class="extype">Elem</span></span>
-      </span>
-      </h4>
-      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>final </dd><dt>Definition Classes</dt><dd><a name="net.northfuse.chameleon.HTMLApplication" class="extype" href="HTMLApplication.html">HTMLApplication</a></dd></dl></div>
-    </li><li visbl="pub" name="net.northfuse.chameleon.HTMLApplication#js" data-isabs="false">
-      <a id="js(String):Elem"></a>
-      <h4 class="signature">
-      <span class="kind">def</span>
-      <span class="symbol"> 
-        <span class="name">js</span>
-        
-        <span class="params">(<span name="js">js: String</span>)</span><span class="result">: <span name="scala.xml.Elem" class="extype">Elem</span></span>
-      </span>
-      </h4>
-      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>final </dd><dt>Definition Classes</dt><dd><a name="net.northfuse.chameleon.HTMLApplication" class="extype" href="HTMLApplication.html">HTMLApplication</a></dd></dl></div>
-    </li><li visbl="pub" name="net.northfuse.chameleon.Application#listSessions" data-isabs="false">
-      <a id="listSessions:ChameleonCallback"></a>
-      <h4 class="signature">
-      <span class="kind">def</span>
-      <span class="symbol"> 
-        <span class="name">listSessions</span>
-        
-        <span class="result">: ChameleonCallback</span>
-      </span>
-      </h4>
-      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>final </dd></dl></div>
-    </li><li visbl="pub" name="net.northfuse.chameleon.Application#mappings" data-isabs="false">
-      <a id="mappings:Map[String, ChameleonCallback]"></a>
-      <h4 class="signature">
-      <span class="kind">def</span>
-      <span class="symbol"> 
-        <span class="name">mappings</span>
-        
-        <span class="result">: <span name="scala.collection.immutable.Map" class="extype">Map</span>[String, ChameleonCallback]</span>
-      </span>
-      </h4>
-      
     </li><li visbl="pub" name="scala.AnyRef#ne" data-isabs="false">
       <a id="ne(AnyRef):Boolean"></a>
       <h4 class="signature">
@@ -385,17 +261,6 @@
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>final </dd><dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
-    </li><li visbl="pub" name="net.northfuse.chameleon.Application#notFound" data-isabs="false">
-      <a id="notFound(String):ChameleonCallback"></a>
-      <h4 class="signature">
-      <span class="kind">def</span>
-      <span class="symbol"> 
-        <span class="name">notFound</span>
-        
-        <span class="params">(<span name="identifier">identifier: String</span>)</span><span class="result">: ChameleonCallback</span>
-      </span>
-      </h4>
-      
     </li><li visbl="pub" name="scala.AnyRef#notify" data-isabs="false">
       <a id="notify():Unit"></a>
       <h4 class="signature">
@@ -418,28 +283,6 @@
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>final </dd><dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
-    </li><li visbl="pub" name="net.northfuse.chameleon.HTMLApplication#page" data-isabs="false">
-      <a id="page(String)(⇒ Elem):ChameleonCallback"></a>
-      <h4 class="signature">
-      <span class="kind">def</span>
-      <span class="symbol"> 
-        <span class="name">page</span>
-        
-        <span class="params">(<span name="title">title: String</span>)</span><span class="params">(<span name="body">body: ⇒ <span name="scala.xml.Elem" class="extype">Elem</span></span>)</span><span class="result">: ChameleonCallback</span>
-      </span>
-      </h4>
-      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>final </dd><dt>Definition Classes</dt><dd><a name="net.northfuse.chameleon.HTMLApplication" class="extype" href="HTMLApplication.html">HTMLApplication</a></dd></dl></div>
-    </li><li visbl="pub" name="net.northfuse.chameleon.HTMLApplication#staticFileClassPath" data-isabs="false">
-      <a id="staticFileClassPath(String):String"></a>
-      <h4 class="signature">
-      <span class="kind">def</span>
-      <span class="symbol"> 
-        <span class="name">staticFileClassPath</span>
-        
-        <span class="params">(<span name="name">name: String</span>)</span><span class="result">: String</span>
-      </span>
-      </h4>
-      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>final </dd><dt>Definition Classes</dt><dd><a name="net.northfuse.chameleon.HTMLApplication" class="extype" href="HTMLApplication.html">HTMLApplication</a></dd></dl></div>
     </li><li visbl="pub" name="scala.AnyRef#synchronized" data-isabs="false">
       <a id="synchronized[T0](⇒ T0):T0"></a>
       <h4 class="signature">
@@ -509,11 +352,7 @@
 
         
 
-        <div name="net.northfuse.chameleon.HTMLApplication" class="parent">
-              <h3>Inherited from <a name="net.northfuse.chameleon.HTMLApplication" class="extype" href="HTMLApplication.html">HTMLApplication</a></h3>
-            </div><div name="net.northfuse.chameleon.IdentifierHandler" class="parent">
-              <h3>Inherited from <a name="net.northfuse.chameleon.IdentifierHandler" class="extype" href="IdentifierHandler.html">IdentifierHandler</a></h3>
-            </div><div name="scala.AnyRef" class="parent">
+        <div name="scala.AnyRef" class="parent">
               <h3>Inherited from AnyRef</h3>
             </div><div name="scala.Any" class="parent">
               <h3>Inherited from <span name="scala.Any" class="extype">Any</span></h3>
